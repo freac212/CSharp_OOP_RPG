@@ -11,7 +11,8 @@ namespace OOP_RPG
         public int CurrentHP { get; set; }
         public string Difficulty { get; private set; }
         public DayOfWeek? Day { get; private set; }
-
+        
+        // For regular Monster creation.
         public Monster(string name, int strength, int defense, int originalHP, string difficulty, DayOfWeek day)
         {
             Name = name;
@@ -33,14 +34,16 @@ namespace OOP_RPG
             Difficulty = difficulty;
             Day = null;
         }
-        public Monster(string name, MonsterPoints monsterPoints, string difficulty)
+        // This is mainly for auto generated monsters
+        public Monster(string name, MonsterPoints monsterPoints, DayOfWeek date)
         {
             Name = name;
             Strength = monsterPoints.Strength;
             Defense = monsterPoints.Defense;
             OriginalHP = monsterPoints.HP;
             CurrentHP = monsterPoints.HP;
-            Difficulty = difficulty;
+            Difficulty = monsterPoints.Difficulty;
+            Day = date;
         }
     }
 }

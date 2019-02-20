@@ -6,16 +6,16 @@ namespace OOP_RPG
 {
     public static class MonsterPicker
     {
-        private static IReadOnlyList<Monster> MonsterList = new List<Monster>
+        // It was suggested I place readonly before the IReadOnlyList... So why not eh?
+        private static readonly IReadOnlyList<Monster> MonsterList = new List<Monster>
         {
+            // ========= HARD CODED MONSTERS ==========
             // TOTAL MONSTERS: 35
-            // 2/5 = Easy -> 14 Easy Monsters
+            // 2/5 = Easy   -> 14 Easy Monsters
             // 2/5 = Medium -> 14 Medium Monsters
-            // 1/5 = Hard -> 7 Hard Monsters
-                        // ========= HARD CODED MONSTERS ==========
-            // EASY
-            //                          Stngth DEF HP
-            // 30 points available
+            // 1/5 = Hard   -> 7 Hard Monsters
+
+            // EASY 20 points            Stngth DEF HP
             new Monster("Slime",            10, 3, 5, Difficulty.Easy, DayOfWeek.Sunday),
             new Monster("Flame Slime",      15, 3, 5, Difficulty.Easy, DayOfWeek.Monday),
             new Monster("Armoured Slime",   10, 8, 4, Difficulty.Easy, DayOfWeek.Thursday),
@@ -33,9 +33,8 @@ namespace OOP_RPG
 
             new Monster("Thief",            15, 5, 20, Difficulty.Easy, DayOfWeek.Tuesday),
             new Monster("Goblin",           15, 5, 20, Difficulty.Easy, DayOfWeek.Friday),
-            //new Monster("Air",              1, 1, 1, Difficulty.Easy),
 
-            // MEDIUM 40 points
+            // MEDIUM 30 points
             new Monster("Stone Golem",      10, 10, 10, Difficulty.Medium, DayOfWeek.Monday),
             new Monster("Ghost",            23, 3, 5, Difficulty.Medium, DayOfWeek.Sunday),
             new Monster("Large Bat",        12, 3, 15, Difficulty.Medium, DayOfWeek.Friday),
@@ -51,10 +50,10 @@ namespace OOP_RPG
             new Monster("Mimic",            28, 1, 1, Difficulty.Medium, DayOfWeek.Sunday),
             new Monster("That Bob guy",     15, 10, 5, Difficulty.Medium, DayOfWeek.Monday),
 
-            new Monster("Grandius",         20, 8, 2, Difficulty.Medium, DayOfWeek.Wednesday), // The warrior makes his return
+            new Monster("Grandius",         20, 8, 2, Difficulty.Medium, DayOfWeek.Wednesday),
             new Monster("Steel Warrior",    5, 15, 10, Difficulty.Medium, DayOfWeek.Tuesday),
                 
-            // HARD 50 points
+            // HARD 40 points
             new Monster("Dark Fighter",                     15, 10, 15, Difficulty.Hard, DayOfWeek.Monday),
             new Monster("Elemental Mage",                   25, 1, 14, Difficulty.Hard, DayOfWeek.Tuesday),
             new Monster("Spider Queen",                     15, 15, 10, Difficulty.Hard, DayOfWeek.Sunday),
@@ -67,26 +66,33 @@ namespace OOP_RPG
 
         public static Monster GetMonster(string difficulty = null)
         {
+            // Choose a list type
+            // > Generate a list
+            List<Monster> Monsters = MonsterGenerator.GenerateMonsters();
+
+            // > Use hard-coded list
+            //List<Monster> Monsters = MonsterList;
+
             List<Monster> SortedMonsters;
             DateTime currentDate = DateTime.Today;
 
             if (difficulty == Difficulty.Easy)
             {
-                SortedMonsters = (from monster in MonsterList
+                SortedMonsters = (from monster in Monsters
                                   where monster.Difficulty == Difficulty.Easy &&
                                   monster.Day == currentDate.DayOfWeek
                                   select monster).ToList();
             }
             else if (difficulty == Difficulty.Medium)
             {
-                SortedMonsters = (from monster in MonsterList
+                SortedMonsters = (from monster in Monsters
                                   where monster.Difficulty == Difficulty.Medium &&
                                   monster.Day == currentDate.DayOfWeek
                                   select monster).ToList();
             }
             else if (difficulty == Difficulty.Hard)
             {
-                SortedMonsters = (from monster in MonsterList
+                SortedMonsters = (from monster in Monsters
                                   where monster.Difficulty == Difficulty.Hard &&
                                   monster.Day == currentDate.DayOfWeek
                                   select monster).ToList();
@@ -94,7 +100,7 @@ namespace OOP_RPG
             else
             {
                 // Else, difficulty not selected, pick based on day.
-                SortedMonsters = (from monster in MonsterList
+                SortedMonsters = (from monster in Monsters
                                   where monster.Day == currentDate.DayOfWeek
                                   select monster).ToList();
             }

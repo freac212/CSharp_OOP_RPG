@@ -18,8 +18,8 @@ namespace OOP_RPG
         {
             while (CurrentMonster.CurrentHP > 0 && Hero.CurrentHP > 0)
             {
-                Console.WriteLine("You've encountered a " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
-                CurrentMonster.CurrentHP + " HP. What will you do?");
+                Console.WriteLine("You've encountered " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
+                CurrentMonster.CurrentHP + $" HP. Difficulty: {CurrentMonster.Difficulty}. What will you do?");
 
                 Console.WriteLine("1. Fight");
 
