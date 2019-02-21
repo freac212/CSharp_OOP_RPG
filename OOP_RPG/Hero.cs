@@ -12,6 +12,7 @@ namespace OOP_RPG
         public int Defense { get; }
         public int OriginalHP { get; set; }
         public int CurrentHP { get; set; }
+        public int Gold { get; private set; }
         public Weapon EquippedWeapon { get; private set; }
         public Armor EquippedArmor { get; private set; }
         public List<Armor> ArmorsBag { get; set; }
@@ -32,6 +33,7 @@ namespace OOP_RPG
             Defense = 10;
             OriginalHP = 30;
             CurrentHP = 30;
+            Gold = 0;
         }
 
         //These are the Methods of our Class.
@@ -59,6 +61,8 @@ namespace OOP_RPG
             {
                 Console.WriteLine(armor.Name + " of " + armor.Defense + " Defense");
             }
+
+            Console.WriteLine($"Gold: {this.Gold}");
         }
 
         public void EquipWeapon()
@@ -75,6 +79,26 @@ namespace OOP_RPG
             {
                 this.EquippedArmor = this.ArmorsBag[0];
             }
+        }
+
+        public void AddGold(int gold)
+        {
+            Gold += gold;
+        }
+
+        public void RemoveGold(int gold)
+        {
+            if(Gold - gold >= 0)
+            {
+                Gold -= gold;
+            } else
+            {
+                throw new Exception("Negative gold value.");
+            }
+            // Else you broke dood.
+            // Nah this is more of a safe check, this actual check will happen in
+            // this store class, and the purchase will be denied if they don't have
+            // Enough funds.
         }
     }
 }

@@ -86,7 +86,10 @@ namespace OOP_RPG
 
         private void Win()
         {
+            // Fight reward will be called here.
+            var GoldWon = FightReward.ApplyRewardToHero(Hero, CurrentMonster.Difficulty);
             Console.WriteLine(CurrentMonster.Name + " has been defeated! You win the battle!");
+            Console.WriteLine($"Rewards: Gold: {GoldWon}");
         }
 
         private void Lose()
