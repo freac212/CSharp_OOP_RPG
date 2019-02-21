@@ -7,8 +7,10 @@ namespace OOP_RPG
     public static class MonsterGenerator
     {
         // Constants, percentage based values for Easy, Medium, Hard.
-        private const double StrengthPercentage = .25;
-        private const double DefensePercentage = .9;
+        private const double StrengthPercentageMin = .25;
+        private const double StrengthPercentageMax = .35;
+        private const double DefensePercentageMin = .09;
+        private const double DefensePercentageMax = .18;
 
         public static class GenerateStats
         {
@@ -33,8 +35,8 @@ namespace OOP_RPG
             static private MonsterPoints AllocatePoints(int pointsAvailableToAllocate, string difficulty)
             {
                 // Strength, defense, HP
-                int randomAllocatedStrength = random.Next((int)(pointsAvailableToAllocate * StrengthPercentage), (int)(pointsAvailableToAllocate * .35));
-                int randomAllocatedDefense = random.Next((int)(pointsAvailableToAllocate * DefensePercentage), (int)(pointsAvailableToAllocate * .20));
+                int randomAllocatedStrength = random.Next((int)(pointsAvailableToAllocate * StrengthPercentageMin), (int)(pointsAvailableToAllocate * StrengthPercentageMax));
+                int randomAllocatedDefense = random.Next((int)(pointsAvailableToAllocate * DefensePercentageMin), (int)(pointsAvailableToAllocate * DefensePercentageMax));
                 int randomAllocatedHP = (pointsAvailableToAllocate - (randomAllocatedStrength + randomAllocatedDefense));
 
                 return new MonsterPoints(randomAllocatedStrength, randomAllocatedDefense, randomAllocatedHP, difficulty);
