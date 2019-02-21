@@ -32,7 +32,7 @@ namespace OOP_RPG
                 return AllocatePoints(50, Difficulty.Hard);
             }
 
-            static private MonsterPoints AllocatePoints(int pointsAvailableToAllocate, string difficulty)
+            static private MonsterPoints AllocatePoints(int pointsAvailableToAllocate, Difficulty difficulty)
             {
                 // Strength, defense, HP
                 int randomAllocatedStrength = random.Next((int)(pointsAvailableToAllocate * StrengthPercentageMin), (int)(pointsAvailableToAllocate * StrengthPercentageMax));

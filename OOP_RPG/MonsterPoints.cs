@@ -5,9 +5,9 @@
         public int Strength { get; private set; }
         public int Defense { get; private set; }
         public int HP { get; private set; }
-        public string Difficulty { get; private set; }
+        public Difficulty Difficulty { get; private set; }
 
-        public MonsterPoints(int strength, int defense, int hp, string difficulty)
+        public MonsterPoints(int strength, int defense, int hp, Difficulty difficulty)
         {
             Strength = strength;
             Defense = defense;

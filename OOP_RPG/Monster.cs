@@ -9,11 +9,11 @@ namespace OOP_RPG
         public int Defense { get; private set; }
         public int OriginalHP { get; private set; }
         public int CurrentHP { get; set; }
-        public string Difficulty { get; private set; }
+        public Difficulty Difficulty { get; private set; }
         public DayOfWeek? Day { get; private set; }
         
         // For regular Monster creation.
-        public Monster(string name, int strength, int defense, int originalHP, string difficulty, DayOfWeek day)
+        public Monster(string name, int strength, int defense, int originalHP, Difficulty difficulty, DayOfWeek day)
         {
             Name = name;
             Strength = strength;
@@ -24,7 +24,7 @@ namespace OOP_RPG
             Day = day;
         }
         // This allows for a monster to be generated with a day, just incase I need to for a dungeon or something.
-        public Monster(string name, int strength, int defense, int originalHP, string difficulty)
+        public Monster(string name, int strength, int defense, int originalHP, Difficulty difficulty)
         {
             Name = name;
             Strength = strength;

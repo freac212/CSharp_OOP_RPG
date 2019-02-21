@@ -64,7 +64,7 @@ namespace OOP_RPG
             // ========= END OF HARD CODED MONSTERS ==========
         };
 
-        public static Monster GetMonster(string difficulty = null)
+        public static Monster GetMonster(Difficulty? difficulty = null)
         {
             // Choose a list type
             // > Generate a list
