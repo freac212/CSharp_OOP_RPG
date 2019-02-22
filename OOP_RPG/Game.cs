@@ -27,13 +27,14 @@ namespace OOP_RPG
         {
             var input = "0";
 
-            while (input != "4")
+            while (input != "5")
             {
                 Console.WriteLine("Please choose an option by entering a number.");
                 Console.WriteLine("1. View Stats");
                 Console.WriteLine("2. View Inventory");
                 Console.WriteLine("3. Fight Monster");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("4. Enter Store");
+                Console.WriteLine("5. Exit");
 
                 input = Console.ReadLine();
 
@@ -48,6 +49,10 @@ namespace OOP_RPG
                 else if (input == "3")
                 {
                     this.Fight();
+                }
+                else if (input == "4")
+                {
+                    Shop.CreateShop(Hero);
                 }
 
                 if (Hero.CurrentHP <= 0)

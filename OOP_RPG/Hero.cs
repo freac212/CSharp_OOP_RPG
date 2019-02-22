@@ -33,7 +33,7 @@ namespace OOP_RPG
             Defense = 10;
             OriginalHP = 30;
             CurrentHP = 30;
-            Gold = 0;
+            Gold = 400;
         }
 
         //These are the Methods of our Class.

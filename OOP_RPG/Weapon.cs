@@ -2,13 +2,15 @@ namespace OOP_RPG
 {
     public class Weapon
     {
-        public string Name { get; }
-        public int Strength { get; }
+        public string Name { get; private set; }
+        public int Strength { get; private set; }
+        public int Value { get; private set; }
 
-        public Weapon(string name, int strength)
+        public Weapon(string name, int strength, int value)
         {
             Name = name;
             Strength = strength;
+            Value = value;
         }
     }
 }
