@@ -34,7 +34,27 @@ namespace OOP_RPG
 
         private void HeroTurn()
         {
-            var compare = Hero.Strength - CurrentMonster.Defense;
+            const double minMultiplier = 0.5;
+            const double maxMultiplier = 1.5;
+            var randomNum = new Random();
+
+            int compare;
+            if (Hero.EquippedWeapon != null)
+            {
+                // Maybe make this into a method
+                var baseDamage = (Hero.Strength + Hero.EquippedWeapon.Strength) - CurrentMonster.Defense;
+                int minDamage = (int)(baseDamage * minMultiplier);
+                int maxDamage = (int)(baseDamage * maxMultiplier);
+                compare = randomNum.Next(minDamage, maxDamage);
+            }
+            else
+            {
+                var baseDamage = Hero.Strength - CurrentMonster.Defense;
+                int minDamage = (int)(baseDamage * minMultiplier);
+                int maxDamage = (int)(baseDamage * maxMultiplier);
+                compare = randomNum.Next(minDamage, maxDamage);
+            }
+
             int damage;
 
             if (compare <= 0)
@@ -63,7 +83,17 @@ namespace OOP_RPG
         private void MonsterTurn()
         {
             int damage;
-            var compare = CurrentMonster.Strength - Hero.Defense;
+            int compare;
+            if (Hero.EquippedArmor != null)
+            {
+                // Maybe make this into a method
+                compare = CurrentMonster.Strength - (Hero.Defense + Hero.EquippedArmor.Defense);
+            }
+            else
+            {
+                compare = CurrentMonster.Strength - Hero.Defense;
+            }
+             
 
             if (compare <= 0)
             {
@@ -90,6 +120,8 @@ namespace OOP_RPG
             var GoldWon = FightReward.ApplyRewardToHero(Hero, CurrentMonster.Difficulty);
             Console.WriteLine(CurrentMonster.Name + " has been defeated! You win the battle!");
             Console.WriteLine($"Rewards: Gold: {GoldWon}");
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadLine();
         }
 
         private void Lose()

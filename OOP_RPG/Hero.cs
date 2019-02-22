@@ -39,14 +39,34 @@ namespace OOP_RPG
         //These are the Methods of our Class.
         public void ShowStats()
         {
+            Console.Clear();
             Console.WriteLine("*****" + this.Name + "*****");
-            Console.WriteLine("Strength: " + this.Strength);
-            Console.WriteLine("Defense: " + this.Defense);
+
+            Console.Write("Strength: " + this.Strength);
+            if (this.EquippedWeapon != null)
+            {
+                Console.WriteLine($"(+{this.EquippedWeapon.Strength})");
+            }
+            else
+            {
+                Console.WriteLine();
+            }
+
+            Console.Write("Defense: " + this.Defense);
+            if (this.EquippedWeapon != null)
+            {
+                Console.WriteLine($"(+{this.EquippedArmor.Defense})");
+            }
+            else
+            {
+                Console.WriteLine();
+            }
             Console.WriteLine("Hitpoints: " + this.CurrentHP + "/" + this.OriginalHP);
         }
 
         public void ShowInventory()
         {
+            Console.Clear();
             Console.WriteLine("*****  INVENTORY ******");
             Console.WriteLine("Weapons: ");
 
@@ -62,22 +82,50 @@ namespace OOP_RPG
                 Console.WriteLine(armor.Name + " of " + armor.Defense + " Defense");
             }
 
+            Console.WriteLine("Equipped: ");
+            if(EquippedWeapon != null)
+            {
+                Console.WriteLine(EquippedWeapon.Name + " of " + EquippedWeapon.Strength + " Strength");
+            } 
+            if(EquippedArmor != null)
+            {
+                Console.WriteLine(EquippedArmor.Name + " of " + EquippedArmor.Defense + " Defense");
+            }
+
             Console.WriteLine($"Gold: {this.Gold}");
         }
 
-        public void EquipWeapon()
+        public void EquipWeapon(int weaponIndex)
         {
             if (WeaponsBag.Any())
             {
-                this.EquippedWeapon = this.WeaponsBag[0];
+                this.WeaponsBag[weaponIndex].Equipped = true;
+                this.EquippedWeapon = this.WeaponsBag[weaponIndex];
             }
         }
 
-        public void EquipArmor()
+        public void EquipArmor(int armourIndex)
         {
             if (ArmorsBag.Any())
             {
-                this.EquippedArmor = this.ArmorsBag[0];
+                this.ArmorsBag[armourIndex].Equipped = true;
+                this.EquippedArmor = this.ArmorsBag[armourIndex];
+            }
+        }
+
+        public void UnEquipWeapon()
+        {
+            if (WeaponsBag.Any())
+            {
+                this.EquippedWeapon = null;
+            }
+        }
+
+        public void UnEquipArmor()
+        {
+            if (WeaponsBag.Any())
+            {
+                this.EquippedWeapon = null;
             }
         }
 
@@ -88,10 +136,11 @@ namespace OOP_RPG
 
         public void RemoveGold(int gold)
         {
-            if(Gold - gold >= 0)
+            if (Gold - gold >= 0)
             {
                 Gold -= gold;
-            } else
+            }
+            else
             {
                 throw new Exception("Negative gold value.");
             }
