@@ -8,39 +8,29 @@ namespace OOP_RPG
 {
     static class UI
     {
-        public static void DisplayWeaponList(List<Weapon> list)
+        public static void DisplayItemList(List<IItems> list)
         {
             if (list.Any())
             {
-                var largestValueLengthArmour = list.Max(armour => armour.Value.ToString().Count());
-                var largestNameLengthArmour = list.Max(armour => armour.Name.ToString().Count());
+                var largestValueLength = list.Max(item => item.Value.ToString().Count());
+                var largestNameLength = list.Max(item => item.Name.ToString().Count());
 
-                for (int armourIndex = 0; armourIndex < list.Count; armourIndex++)
+                for (int itemIndex = 0; itemIndex < list.Count; itemIndex++)
                 {
-                    var armour = list[armourIndex];
-                    Console.Write($"{armourIndex + 1} > ${armour.Value} ");
-                    Console.SetCursorPosition(6 + largestValueLengthArmour, Console.CursorTop);
-                    Console.Write($":: {armour.Name}");
-                    Console.SetCursorPosition(10 + largestValueLengthArmour + largestNameLengthArmour, Console.CursorTop);
-                    Console.WriteLine($"- STR: {armour.Strength}");
-                }
-            }
-        }
-        public static void DisplayArmourList(List<Armor> list)
-        {
-            if (list.Any())
-            {
-                var largestValueLengthArmour = list.Max(armour => armour.Value.ToString().Count());
-                var largestNameLengthArmour = list.Max(armour => armour.Name.ToString().Count());
+                    var item = list[itemIndex];
+                    Console.Write($"{itemIndex + 1} > ${item.Value} ");
+                    Console.SetCursorPosition(6 + largestValueLength, Console.CursorTop);
+                    Console.Write($":: {item.Name}");
+                    Console.SetCursorPosition(10 + largestValueLength + largestNameLength, Console.CursorTop);
 
-                for (int armourIndex = 0; armourIndex < list.Count; armourIndex++)
-                {
-                    var armour = list[armourIndex];
-                    Console.Write($"{armourIndex + 1} > ${armour.Value} ");
-                    Console.SetCursorPosition(6 + largestValueLengthArmour, Console.CursorTop);
-                    Console.Write($":: {armour.Name}");
-                    Console.SetCursorPosition(10 + largestValueLengthArmour + largestNameLengthArmour, Console.CursorTop);
-                    Console.WriteLine($"- DF: {armour.Defense}");
+                    if (item.Type == ItemTypes.Armour)
+                    {
+                        Console.WriteLine($"- DF: {item.Defense}");
+                    }
+                    else if (item.Type == ItemTypes.Weapon)
+                    {
+                        Console.WriteLine($"- STR: {item.Strength}");
+                    }
                 }
             }
         }

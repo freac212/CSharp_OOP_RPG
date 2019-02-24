@@ -84,16 +84,16 @@ namespace OOP_RPG
         {
             int damage;
             int compare;
-            if (Hero.EquippedArmor != null)
+            if (Hero.EquippedArmour != null)
             {
                 // Maybe make this into a method
-                compare = CurrentMonster.Strength - (Hero.Defense + Hero.EquippedArmor.Defense);
+                compare = CurrentMonster.Strength - (Hero.Defense + Hero.EquippedArmour.Defense);
             }
             else
             {
                 compare = CurrentMonster.Strength - Hero.Defense;
             }
-             
+
 
             if (compare <= 0)
             {

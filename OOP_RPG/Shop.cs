@@ -13,7 +13,7 @@ namespace OOP_RPG
         // Allow equiping in the store
         // Avoid passing around hero, right?
 
-        public static List<Weapon> ShopWeapons = new List<Weapon>
+        public static List<IItems> ShopWeapons = new List<IItems>
         {
             new Weapon("Arm", 3, 20),
             new Weapon("Box", 1, 5),
@@ -26,7 +26,7 @@ namespace OOP_RPG
             new Weapon("Obsidian Zweihander", 50, 100000),
         };
 
-        public static List<Armor> ShopArmours = new List<Armor>
+        public static List<IItems> ShopArmours = new List<IItems>
         {
             new Armor("Iron Chestplate", 3, 20),
             new Armor("Leather Chestplate", 1, 5),
@@ -47,7 +47,7 @@ namespace OOP_RPG
 
             if (ShopWeapons.Any())
             {
-                UI.DisplayWeaponList(ShopWeapons);
+                UI.DisplayItemList(ShopWeapons);
             }
             else
             {
@@ -58,7 +58,7 @@ namespace OOP_RPG
 
             if (ShopArmours.Any())
             {
-                UI.DisplayArmourList(ShopArmours);
+                UI.DisplayItemList(ShopArmours);
             }
             else
             {
@@ -68,9 +68,9 @@ namespace OOP_RPG
             Console.WriteLine("======== Hero inventory ========");
             Console.WriteLine($"## {hero.Name}'s gold: ${hero.Gold} ##");
             Console.WriteLine("____________ Weapons ___________");
-            UI.DisplayWeaponList(hero.WeaponsBag);
+            UI.DisplayItemList(Items.GetListOfItems(hero.Bag, ItemTypes.Weapon));
             Console.WriteLine("____________ Armour ____________");
-            UI.DisplayArmourList(hero.ArmorsBag);
+            UI.DisplayItemList(Items.GetListOfItems(hero.Bag, ItemTypes.Armour));
             Console.WriteLine("================================");
 
         }
@@ -192,7 +192,7 @@ namespace OOP_RPG
             if (hero.Gold >= getWeapon.Value)
             {
                 // Add to Hero's inventory, remove from stores inventory.
-                hero.WeaponsBag.Add(getWeapon);
+                hero.Bag.Add(getWeapon);
                 hero.RemoveGold(getWeapon.Value);
                 ShopWeapons.RemoveAt(weaponIndex);
                 return true;
@@ -216,7 +216,7 @@ namespace OOP_RPG
             if (hero.Gold >= getArmour.Value)
             {
                 // Add to Hero's inventory, remove from stores inventory.
-                hero.ArmorsBag.Add(getArmour);
+                hero.Bag.Add(getArmour);
                 hero.RemoveGold(getArmour.Value);
                 ShopArmours.RemoveAt(armourIndex);
                 return true;

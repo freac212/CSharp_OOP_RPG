@@ -49,6 +49,7 @@
     <Compile Include="FightReward.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Hero.cs" />
+    <Compile Include="Items.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="MonsterGenerator.cs" />
     <Compile Include="MonsterPicker.cs" />

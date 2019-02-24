@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 
 namespace OOP_RPG
 {
@@ -13,7 +14,7 @@ namespace OOP_RPG
 
         public void Start()
         {
-            
+
             Console.WriteLine("Welcome hero!");
             Console.WriteLine("Please enter your name:");
 
@@ -106,23 +107,24 @@ namespace OOP_RPG
 
                     Console.WriteLine("====================");
                     Console.WriteLine("======= Bag ========");
-                    UI.DisplayWeaponList(Hero.WeaponsBag);
+                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, ItemTypes.Weapon));
                     Console.WriteLine("====================");
                     Console.WriteLine("Choose a weapon number to equip.");
                     Console.WriteLine("Or choose 0 to return to Inventory.");
 
                     weaponEquip = Console.ReadLine();
 
-                    while(!int.TryParse(weaponEquip, out int _x))
+                    while (!int.TryParse(weaponEquip, out int _x))
                     {
                         Console.WriteLine("That is not a number, please choose again.");
                         weaponEquip = Console.ReadLine();
                     }
+
                     // If the input can be parsed as a number
                     if (int.TryParse(weaponEquip, out int weaponIndex) && weaponIndex != 0)
                     {
                         // If the number is an index of weapons bag
-                        if ((weaponIndex -= 1) <= Hero.WeaponsBag.Count-1)
+                        if ((weaponIndex -= 1) <= Items.GetListOfItems(Hero.Bag, ItemTypes.Weapon).Count - 1)
                         {
                             // Then Equip that weapon
                             Hero.EquipWeapon(weaponIndex);
@@ -137,11 +139,11 @@ namespace OOP_RPG
                 }
                 else if (inventoryInput == "2")
                 {
-                    var armourEquipInput= "";
+                    var armourEquipInput = "";
                     Console.WriteLine("===== Equipped =====");
-                    if (Hero.EquippedArmor != null)
+                    if (Hero.EquippedArmour != null)
                     {
-                        Console.WriteLine($"Current Armour: {Hero.EquippedArmor.Name}");
+                        Console.WriteLine($"Current Armour: {Hero.EquippedArmour.Name}");
                     }
                     else
                     {
@@ -150,7 +152,7 @@ namespace OOP_RPG
 
                     Console.WriteLine("====================");
                     Console.WriteLine("======= Bag ========");
-                    UI.DisplayArmourList(Hero.ArmorsBag);
+                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, ItemTypes.Armour));
                     Console.WriteLine("====================");
                     Console.WriteLine("Choose an Armour number to equip.");
                     Console.WriteLine("Or choose 0 to return to Inventory.");
@@ -162,11 +164,12 @@ namespace OOP_RPG
                         Console.WriteLine("That is not a number, please choose again.");
                         armourEquipInput = Console.ReadLine();
                     }
+
                     // If the input can be parsed as a number
                     if (int.TryParse(armourEquipInput, out int armourIndex) && armourIndex != 0)
                     {
                         // If the number is an index of armour bag
-                        if ((armourIndex -= 1) <= Hero.ArmorsBag.Count-1)
+                        if ((armourIndex -= 1) <= Items.GetListOfItems(Hero.Bag, ItemTypes.Armour).Count - 1)
                         {
                             // Then Equip that Armour
                             Hero.EquipArmor(armourIndex);

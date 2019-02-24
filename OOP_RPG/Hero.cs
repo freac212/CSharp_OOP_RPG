@@ -13,10 +13,9 @@ namespace OOP_RPG
         public int OriginalHP { get; set; }
         public int CurrentHP { get; set; }
         public int Gold { get; private set; }
-        public Weapon EquippedWeapon { get; private set; }
-        public Armor EquippedArmor { get; private set; }
-        public List<Armor> ArmorsBag { get; set; }
-        public List<Weapon> WeaponsBag { get; set; }
+        public IItems EquippedWeapon { get; private set; }
+        public IItems EquippedArmour { get; private set; }
+        public List<IItems> Bag { get; set; }
 
         /*This is a Constructor.
         When we create a new object from our Hero class, the instance of this class, our hero, has:
@@ -27,8 +26,7 @@ namespace OOP_RPG
         */
         public Hero()
         {
-            ArmorsBag = new List<Armor>();
-            WeaponsBag = new List<Weapon>();
+            Bag = new List<IItems>();
             Strength = 10;
             Defense = 10;
             OriginalHP = 30;
@@ -53,9 +51,9 @@ namespace OOP_RPG
             }
 
             Console.Write("Defense: " + this.Defense);
-            if (this.EquippedWeapon != null)
+            if (this.EquippedArmour != null)
             {
-                Console.WriteLine($"(+{this.EquippedArmor.Defense})");
+                Console.WriteLine($"(+{this.EquippedArmour.Defense})");
             }
             else
             {
@@ -70,26 +68,26 @@ namespace OOP_RPG
             Console.WriteLine("*****  INVENTORY ******");
             Console.WriteLine("Weapons: ");
 
-            foreach (var weapon in this.WeaponsBag)
+            foreach (var weapon in Items.GetListOfItems(this.Bag, ItemTypes.Weapon))
             {
                 Console.WriteLine(weapon.Name + " of " + weapon.Strength + " Strength");
             }
 
             Console.WriteLine("Armor: ");
 
-            foreach (var armor in this.ArmorsBag)
+            foreach (var armor in Items.GetListOfItems(this.Bag, ItemTypes.Armour))
             {
                 Console.WriteLine(armor.Name + " of " + armor.Defense + " Defense");
             }
 
             Console.WriteLine("Equipped: ");
-            if(EquippedWeapon != null)
+            if (EquippedWeapon != null)
             {
                 Console.WriteLine(EquippedWeapon.Name + " of " + EquippedWeapon.Strength + " Strength");
-            } 
-            if(EquippedArmor != null)
+            }
+            if (EquippedArmour != null)
             {
-                Console.WriteLine(EquippedArmor.Name + " of " + EquippedArmor.Defense + " Defense");
+                Console.WriteLine(EquippedArmour.Name + " of " + EquippedArmour.Defense + " Defense");
             }
 
             Console.WriteLine($"Gold: {this.Gold}");
@@ -97,35 +95,21 @@ namespace OOP_RPG
 
         public void EquipWeapon(int weaponIndex)
         {
+            var WeaponsBag = Items.GetListOfItems(this.Bag, ItemTypes.Weapon);
             if (WeaponsBag.Any())
             {
-                this.WeaponsBag[weaponIndex].Equipped = true;
-                this.EquippedWeapon = this.WeaponsBag[weaponIndex];
+                WeaponsBag[weaponIndex].Equipped = true;
+                this.EquippedWeapon = WeaponsBag[weaponIndex];
             }
         }
 
         public void EquipArmor(int armourIndex)
         {
-            if (ArmorsBag.Any())
+            var ArmoursBag = Items.GetListOfItems(this.Bag, ItemTypes.Armour);
+            if (ArmoursBag.Any())
             {
-                this.ArmorsBag[armourIndex].Equipped = true;
-                this.EquippedArmor = this.ArmorsBag[armourIndex];
-            }
-        }
-
-        public void UnEquipWeapon()
-        {
-            if (WeaponsBag.Any())
-            {
-                this.EquippedWeapon = null;
-            }
-        }
-
-        public void UnEquipArmor()
-        {
-            if (WeaponsBag.Any())
-            {
-                this.EquippedWeapon = null;
+                ArmoursBag[armourIndex].Equipped = true;
+                this.EquippedArmour = ArmoursBag[armourIndex];
             }
         }
 
