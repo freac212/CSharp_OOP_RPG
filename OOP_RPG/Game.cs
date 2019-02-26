@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace OOP_RPG
@@ -30,13 +31,19 @@ namespace OOP_RPG
             while (input != "5")
             {
                 Console.Clear();
-                Console.WriteLine("Hello " + Hero.Name);
-                Console.WriteLine("Please choose an option by entering a number.");
-                Console.WriteLine("1. View Stats");
-                Console.WriteLine("2. View Inventory");
-                Console.WriteLine("3. Fight Monster");
-                Console.WriteLine("4. Enter Store");
-                Console.WriteLine("5. Exit");
+                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
+                // Display options
+                UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "Hello " + Hero.Name,
+                    "Please choose a number option.",
+                    "1. View Stats",
+                    "2. View Inventory",
+                    "3. Fight Monster",
+                    "4. Enter Store",
+                    "5. Exit"
+                }, UI.Grid.GridCenter());
+                // Display output
 
                 input = Console.ReadLine();
 
@@ -82,6 +89,9 @@ namespace OOP_RPG
                 Hero.ShowInventory();
                 Console.WriteLine("1. Equip Weapon");
                 Console.WriteLine("2. Equip Armour");
+                Console.WriteLine("3. UnEquip Weapon");
+                Console.WriteLine("4. UnEquip Armour");
+                Console.WriteLine("5. UnEquip All");
                 Console.WriteLine("Press 0 to return to main menu.");
                 inventoryInput = Console.ReadLine();
 
@@ -107,7 +117,7 @@ namespace OOP_RPG
 
                     Console.WriteLine("====================");
                     Console.WriteLine("======= Bag ========");
-                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, ItemTypes.Weapon));
+                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, typeof(Weapon)));
                     Console.WriteLine("====================");
                     Console.WriteLine("Choose a weapon number to equip.");
                     Console.WriteLine("Or choose 0 to return to Inventory.");
@@ -124,10 +134,10 @@ namespace OOP_RPG
                     if (int.TryParse(weaponEquip, out int weaponIndex) && weaponIndex != 0)
                     {
                         // If the number is an index of weapons bag
-                        if ((weaponIndex -= 1) <= Items.GetListOfItems(Hero.Bag, ItemTypes.Weapon).Count - 1)
+                        if ((weaponIndex -= 1) <= Items.GetListOfItems(Hero.Bag, typeof(Weapon)).Count - 1)
                         {
                             // Then Equip that weapon
-                            Hero.EquipWeapon(weaponIndex);
+                            Hero.Equip(weaponIndex, typeof(Weapon));
                         }
                         else
                         {
@@ -152,7 +162,7 @@ namespace OOP_RPG
 
                     Console.WriteLine("====================");
                     Console.WriteLine("======= Bag ========");
-                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, ItemTypes.Armour));
+                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, typeof(Armor)));
                     Console.WriteLine("====================");
                     Console.WriteLine("Choose an Armour number to equip.");
                     Console.WriteLine("Or choose 0 to return to Inventory.");
@@ -169,10 +179,10 @@ namespace OOP_RPG
                     if (int.TryParse(armourEquipInput, out int armourIndex) && armourIndex != 0)
                     {
                         // If the number is an index of armour bag
-                        if ((armourIndex -= 1) <= Items.GetListOfItems(Hero.Bag, ItemTypes.Armour).Count - 1)
+                        if ((armourIndex -= 1) <= Items.GetListOfItems(Hero.Bag, typeof(Armor)).Count - 1)
                         {
                             // Then Equip that Armour
-                            Hero.EquipArmor(armourIndex);
+                            Hero.Equip(armourIndex, typeof(Armor));
                         }
                         else
                         {
@@ -181,6 +191,40 @@ namespace OOP_RPG
                             Console.ReadKey();
                         }
                     }
+                }
+                else if (inventoryInput == "3")
+                {
+                    if (Hero.UpEquip(typeof(Weapon)))
+                    {
+                        Console.WriteLine("Weapon UnEquiped.");
+                    } else
+                    {
+                        Console.WriteLine("There's no weapon to UnEquip.");
+
+                    }
+                    Console.WriteLine("Press any key to return to Inventory.");
+                    Console.ReadKey();
+                }
+                else if (inventoryInput == "4")
+                {
+                    if (Hero.UpEquip(typeof(Armor)))
+                    {
+                        Console.WriteLine("Armour UnEquiped.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("There's no Armour to UnEquip.");
+
+                    }
+                    Console.WriteLine("Press any key to return to Inventory.");
+                    Console.ReadKey();
+                }
+                else if (inventoryInput == "5")
+                {
+                    Hero.UpEquip();
+                    Console.WriteLine("All Items UnEquiped");
+                    Console.WriteLine("Press any key to return to Inventory.");
+                    Console.ReadKey();
                 }
             }
         }

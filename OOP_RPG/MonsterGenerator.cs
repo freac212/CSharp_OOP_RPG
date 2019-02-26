@@ -12,7 +12,7 @@ namespace OOP_RPG
         private const double DefensePercentageMin = .09;
         private const double DefensePercentageMax = .18;
 
-        public static class GenerateStats
+        public static class StatsGenerator
         {
             private static Random random = new Random();
 
@@ -84,17 +84,17 @@ namespace OOP_RPG
                     if (i >= 0 && i <= 3)
                     {
                         // 4 Easy enemies created
-                        GeneratedListOfMonsters.Add(new Monster(BossNameGen(randomNum), GenerateStats.Easy(), Date));
+                        GeneratedListOfMonsters.Add(new Monster(BossNameGen(randomNum), StatsGenerator.Easy(), Date));
                     }
                     else if (i >= 4 && i <= 7)
                     {
                         // 4 Medium enemies created
-                        GeneratedListOfMonsters.Add(new Monster(BossNameGen(randomNum), GenerateStats.Medium(), Date));
+                        GeneratedListOfMonsters.Add(new Monster(BossNameGen(randomNum), StatsGenerator.Medium(), Date));
                     }
                     else if (i >= 8 && i <= 9)
                     {
                         // 2 Hard enemies created
-                        GeneratedListOfMonsters.Add(new Monster(BossNameGen(randomNum), GenerateStats.Hard(), Date));
+                        GeneratedListOfMonsters.Add(new Monster(BossNameGen(randomNum), StatsGenerator.Hard(), Date));
                     }
                 }
             }

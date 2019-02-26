@@ -13,9 +13,10 @@ namespace OOP_RPG
         public int OriginalHP { get; set; }
         public int CurrentHP { get; set; }
         public int Gold { get; private set; }
-        public IItems EquippedWeapon { get; private set; }
-        public IItems EquippedArmour { get; private set; }
-        public List<IItems> Bag { get; set; }
+        // FIX
+        public IGameItem EquippedWeapon { get; private set; }
+        public IGameItem EquippedArmour { get; private set; }
+        public List<IGameItem> Bag { get; set; }
 
         /*This is a Constructor.
         When we create a new object from our Hero class, the instance of this class, our hero, has:
@@ -26,7 +27,7 @@ namespace OOP_RPG
         */
         public Hero()
         {
-            Bag = new List<IItems>();
+            Bag = new List<IGameItem>();
             Strength = 10;
             Defense = 10;
             OriginalHP = 30;
@@ -43,7 +44,7 @@ namespace OOP_RPG
             Console.Write("Strength: " + this.Strength);
             if (this.EquippedWeapon != null)
             {
-                Console.WriteLine($"(+{this.EquippedWeapon.Strength})");
+                Console.WriteLine($"(+{this.EquippedWeapon.GetAttribute()})");
             }
             else
             {
@@ -53,7 +54,7 @@ namespace OOP_RPG
             Console.Write("Defense: " + this.Defense);
             if (this.EquippedArmour != null)
             {
-                Console.WriteLine($"(+{this.EquippedArmour.Defense})");
+                Console.WriteLine($"(+{this.EquippedArmour.GetAttribute()})");
             }
             else
             {
@@ -68,70 +69,102 @@ namespace OOP_RPG
             Console.WriteLine("*****  INVENTORY ******");
             Console.WriteLine("Weapons: ");
 
-            foreach (var weapon in Items.GetListOfItems(this.Bag, ItemTypes.Weapon))
+            foreach (var weapon in Items.GetListOfItems(this.Bag, typeof(Weapon)))
             {
-                Console.WriteLine(weapon.Name + " of " + weapon.Strength + " Strength");
+                weapon.GetDescription();
             }
 
             Console.WriteLine("Armor: ");
 
-            foreach (var armor in Items.GetListOfItems(this.Bag, ItemTypes.Armour))
+            foreach (var armor in Items.GetListOfItems(this.Bag, typeof(Armor)))
             {
-                Console.WriteLine(armor.Name + " of " + armor.Defense + " Defense");
+                armor.GetDescription();
             }
 
             Console.WriteLine("Equipped: ");
             if (EquippedWeapon != null)
             {
-                Console.WriteLine(EquippedWeapon.Name + " of " + EquippedWeapon.Strength + " Strength");
+                EquippedWeapon.GetDescription();
             }
             if (EquippedArmour != null)
             {
-                Console.WriteLine(EquippedArmour.Name + " of " + EquippedArmour.Defense + " Defense");
+                EquippedArmour.GetDescription();
             }
 
             Console.WriteLine($"Gold: {this.Gold}");
         }
 
-        public void EquipWeapon(int weaponIndex)
+        public void Equip(int weaponIndex, Type itemType)
         {
-            var WeaponsBag = Items.GetListOfItems(this.Bag, ItemTypes.Weapon);
-            if (WeaponsBag.Any())
+            var itemBag = Items.GetListOfItems(this.Bag, itemType);
+            if (itemBag.Any())
             {
-                WeaponsBag[weaponIndex].Equipped = true;
-                this.EquippedWeapon = WeaponsBag[weaponIndex];
+                if (itemType == typeof(Weapon))
+                {
+                    this.EquippedWeapon = itemBag[weaponIndex];
+                }
+                else if (itemType == typeof(Armor))
+                {
+                    this.EquippedArmour = itemBag[weaponIndex];
+                }
             }
         }
 
-        public void EquipArmor(int armourIndex)
+        public bool UpEquip(Type type = null)
         {
-            var ArmoursBag = Items.GetListOfItems(this.Bag, ItemTypes.Armour);
-            if (ArmoursBag.Any())
+            if (type == typeof(Weapon))
             {
-                ArmoursBag[armourIndex].Equipped = true;
-                this.EquippedArmour = ArmoursBag[armourIndex];
+                if (this.EquippedWeapon == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var WeaponsBag = Items.GetListOfItems(this.Bag, typeof(Weapon));
+                    this.EquippedWeapon = null;
+                    return true;
+                }
             }
+            else if (type == typeof(Armor))
+            {
+                if (this.EquippedArmour == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var ArmourBag = Items.GetListOfItems(this.Bag, typeof(Armor));
+                    this.EquippedArmour = null;
+                    return true;
+                }
+            } else
+            {
+                this.EquippedWeapon = null;
+                this.EquippedArmour = null;
+            }
+            return false;
         }
 
-        public void AddGold(int gold)
-        {
-            Gold += gold;
-        }
-
-        public void RemoveGold(int gold)
-        {
-            if (Gold - gold >= 0)
-            {
-                Gold -= gold;
-            }
-            else
-            {
-                throw new Exception("Negative gold value.");
-            }
-            // Else you broke dood.
-            // Nah this is more of a safe check, this actual check will happen in
-            // this store class, and the purchase will be denied if they don't have
-            // Enough funds.
-        }
+    public void AddGold(int gold)
+    {
+        //TODO: Add gold coins check, ensure the value is a positive int.
+        Gold += gold;
     }
+
+    public void RemoveGold(int gold)
+    {
+        if (Gold - gold >= 0)
+        {
+            Gold -= gold;
+        }
+        else
+        {
+            throw new Exception("Negative gold value.");
+        }
+        // Else you broke dood.
+        // Nah this is more of a safe check, this actual check will happen in
+        // this store class, and the purchase will be denied if they don't have
+        // Enough funds.
+    }
+}
 }

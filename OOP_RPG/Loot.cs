@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OOP_RPG
 {
-    static class FightReward
+    static class Loot
     {
-        public static int ApplyRewardToHero(Hero hero, Difficulty difficulty)
+        public static int LootGenerator(Hero hero, Difficulty difficulty)
         {
             // Gold reward is calculated based on difficulty
             //  BaseGold: 30
@@ -26,7 +26,7 @@ namespace OOP_RPG
             const double HardMax = 1;
 
 
-            int baseRewardGold = 30;
+            int baseRewardGold = 31;
             var randomNum = new Random();
 
             switch (difficulty)

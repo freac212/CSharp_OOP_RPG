@@ -1,24 +1,28 @@
 namespace OOP_RPG
 {
-    public class Armor : IItems
+    public class Armor : IGameItem
     {
-        public string Name { get; set; }
-        public int Value { get; set; }
-        public bool Equipped { get; set; }
-        public ItemTypes Type { get; set; }
+        public string Name { get; }
+        public int Value { get; }
 
-        public int Strength { get; set; }
-        public int Defense { get; set; }
+        private int Defense { get; }
 
         public Armor(string name, int defense, int value)
         {
             Name = name;
             Value = value;
-            Equipped = false;
-            Type = ItemTypes.Armour;
 
             Defense = defense;
-            Strength = 0;
+        }
+
+        public int GetAttribute ()
+        {
+            return Defense;
+        }
+
+        public void GetDescription()
+        {
+            System.Console.WriteLine(Name + " of " + Defense + " Strength");
         }
     }
 }

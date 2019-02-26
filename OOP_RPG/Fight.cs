@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace OOP_RPG
 {
@@ -18,10 +19,15 @@ namespace OOP_RPG
         {
             while (CurrentMonster.CurrentHP > 0 && Hero.CurrentHP > 0)
             {
-                Console.WriteLine("You've encountered " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
+                Console.Clear();
+                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
+                UI.PrintToOutput("You've encountered " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
                 CurrentMonster.CurrentHP + $" HP. Difficulty: {CurrentMonster.Difficulty}. What will you do?");
 
-                Console.WriteLine("1. Fight");
+                UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "1. Fight"
+                }, UI.Grid.GridCenter());
 
                 var input = Console.ReadLine();
 
@@ -42,7 +48,7 @@ namespace OOP_RPG
             if (Hero.EquippedWeapon != null)
             {
                 // Maybe make this into a method
-                var baseDamage = (Hero.Strength + Hero.EquippedWeapon.Strength) - CurrentMonster.Defense;
+                var baseDamage = (Hero.Strength + Hero.EquippedWeapon.GetAttribute()) - CurrentMonster.Defense;
                 int minDamage = (int)(baseDamage * minMultiplier);
                 int maxDamage = (int)(baseDamage * maxMultiplier);
                 compare = randomNum.Next(minDamage, maxDamage);
@@ -68,7 +74,7 @@ namespace OOP_RPG
                 CurrentMonster.CurrentHP -= damage;
             }
 
-            Console.WriteLine("You did " + damage + " damage!");
+            UI.PrintToOutput("You did " + damage + " damage!");
 
             if (CurrentMonster.CurrentHP <= 0)
             {
@@ -87,7 +93,7 @@ namespace OOP_RPG
             if (Hero.EquippedArmour != null)
             {
                 // Maybe make this into a method
-                compare = CurrentMonster.Strength - (Hero.Defense + Hero.EquippedArmour.Defense);
+                compare = CurrentMonster.Strength - (Hero.Defense + Hero.EquippedArmour.GetAttribute());
             }
             else
             {
@@ -106,7 +112,7 @@ namespace OOP_RPG
                 Hero.CurrentHP -= damage;
             }
 
-            Console.WriteLine(CurrentMonster.Name + " does " + damage + " damage!");
+            UI.PrintToOutput(CurrentMonster.Name + " does " + damage + " damage!");
 
             if (Hero.CurrentHP <= 0)
             {
@@ -117,17 +123,30 @@ namespace OOP_RPG
         private void Win()
         {
             // Fight reward will be called here.
-            var GoldWon = FightReward.ApplyRewardToHero(Hero, CurrentMonster.Difficulty);
-            Console.WriteLine(CurrentMonster.Name + " has been defeated! You win the battle!");
-            Console.WriteLine($"Rewards: Gold: {GoldWon}");
-            Console.WriteLine("Press any key to continue...");
+            var GoldWon = Loot.LootGenerator(Hero, CurrentMonster.Difficulty);
+            Console.Clear();
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
+            UI.PrintToOutput(new List<string>
+            {
+                    CurrentMonster.Name + " has been defeated! You win the battle!",
+                    $"Rewards: Gold: {GoldWon}"
+            });
+            UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "Press any key to continue..."
+                }, UI.Grid.GridCenter());
             Console.ReadLine();
         }
 
         private void Lose()
         {
-            Console.WriteLine("You've been defeated! :( GAME OVER.");
-            Console.WriteLine("Press any key to exit the game");
+            Console.Clear();
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
+            UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "You've been defeated! :( GAME OVER."
+                }, UI.Grid.GridCenter());
+            UI.PrintToOptions("Press any key to exit the game");
             Console.ReadKey();
         }
     }
