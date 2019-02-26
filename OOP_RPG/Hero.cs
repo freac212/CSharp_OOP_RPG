@@ -176,5 +176,21 @@ namespace OOP_RPG
             // Remove potion from inventory.
             this.Bag.Remove(potion);
         }
+
+        public void RemoveItemFromHero(IGameItem item)
+        {
+            // Remove Item from bag
+            this.Bag.Remove(item);
+
+            // Remove Item from equipment slots if they're equipted
+            if(item == this.EquippedWeapon)
+            {
+                this.UpEquip(typeof(Weapon));
+
+            } else if (item == this.EquippedArmour)
+            {
+                this.UpEquip(typeof(Armor));
+            }
+        }
     }
 }

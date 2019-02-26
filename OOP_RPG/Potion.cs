@@ -4,14 +4,14 @@
     {
         public string Name { get; }
         public int Value { get; }
-
+        public int ResaleValue { get; }
         private int Health { get; }
 
         public Potion(string name, int health, int value)
         {
             Name = name;
             Value = value;
-
+            ResaleValue = Items.CalculatedItemValue(value);
             Health = health;
         }
 

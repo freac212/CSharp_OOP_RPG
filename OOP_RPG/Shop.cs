@@ -47,7 +47,8 @@ namespace OOP_RPG
                 {
                     "Please choose an option.",
                     "1. Buy an item",
-                    "2. Exit Store"
+                    "2. Sell an item",
+                    "3. Exit Store"
                 }, UI.Grid.Center);
         }
 
@@ -55,7 +56,7 @@ namespace OOP_RPG
         {
             var shopMainInput = "0";
 
-            while (shopMainInput != "2")
+            while (shopMainInput != "3")
             {
                 DrawShop(hero);
 
@@ -117,7 +118,59 @@ namespace OOP_RPG
                     }
                     else
                     {
-                        UI.Draw.PrintToOutput(new List<string> { "There's no Weapons to buy, check again later.", "Press any button to return to shop..." });
+                        UI.Draw.PrintToOutput(new List<string> { "There's no Items to buy, check again later.", "Press any button to return to shop..." });
+                        Console.ReadLine();
+                        break;
+                    }
+
+                }
+                else if (shopMainInput == "2")
+                {
+                    // Buying an item..
+                    var sellInput = "";
+
+                    if (hero.Bag.Any())
+                    {
+                        Console.Clear();
+                        UI.DefaultBoxes.DrawInventory(hero, UI.Grid.Left, true);
+                        UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.Right);
+                        UI.DefaultBoxes.DrawOptions(new List<string>
+                        {
+                            "Please choose an item #",
+                            "Press enter to exit..",
+                        }, UI.Grid.Center);
+
+                        sellInput = Console.ReadLine();
+                        if (sellInput == "")
+                        {
+                            continue;
+                        }
+                        else
+                        {
+
+                            int.TryParse(sellInput, out int sellInputIndex);
+                            // Input validation, cannot be 0
+                            if (sellInputIndex > 0)
+                            {
+                                PlayerSellItem(sellInputIndex, hero);
+                                UI.Draw.PrintToOutput(new List<string>{
+                                    "Item sold!",
+                                    "Press any button to return to shop..."
+                                });
+                            }
+                            else
+                            {
+                                UI.Draw.PrintToOutput(new List<string> {
+                                    "Input value was either 0 or less",
+                                    "Press any button to return to shop..."
+                                });
+                            }
+                            Console.ReadLine();
+                        }
+                    }
+                    else
+                    {
+                        UI.Draw.PrintToOutput(new List<string> { "You have no Items to sell, earn gold to buy some!", "Press any button to return to shop..." });
                         Console.ReadLine();
                         break;
                     }
@@ -148,6 +201,20 @@ namespace OOP_RPG
                 // Didn't have enough gold, 
                 return false;
             }
+        }
+
+        public static int PlayerSellItem(int itemID, Hero hero)
+        {
+            var itemIndex = itemID - 1;
+            var getItem = (from item in hero.Bag
+                           where itemIndex == hero.Bag.IndexOf(item)
+                           select item).FirstOrDefault();
+
+            // Add to Shop's inventory, remove from Hero's inventory.
+            ShopItems.Add(getItem);
+            hero.RemoveItemFromHero(getItem);
+            hero.AddGold(getItem.ResaleValue);
+            return getItem.ResaleValue;
         }
     }
 }

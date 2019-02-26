@@ -8,7 +8,7 @@ namespace OOP_RPG.UI
 {
     public class DefaultBoxes
     {
-        public static void DrawInventory(Hero hero, Grid grid)
+        public static void DrawInventory(Hero hero, Grid grid, bool drawItemsWithIndexs = false)
         {
             int BlockMax = grid.GridMax;
             int BlockMin = grid.GridMin;
@@ -50,40 +50,60 @@ namespace OOP_RPG.UI
             inventory.BoxInventoryHeader("INVENTORY/BAG");
 
             // WEAPONS
-            var heroesWeapons = Items.GetListOfItems(hero.Bag, typeof(Weapon));
-            if (heroesWeapons.Any())
+            if (drawItemsWithIndexs)
             {
-                inventory.BoxInventorySubHeader("Weapons: ");
-
-                foreach (var weapon in heroesWeapons)
+                for (int i = 0; i < hero.Bag.Count; i++)
                 {
-                    inventory.BoxInventoryWeapon(weapon);
-                }
-                inventory.BoxInventoryMiddleBreak();
-            }
-            // ARMOUR 
-            var heroesArmour = Items.GetListOfItems(hero.Bag, typeof(Armor));
-            if (heroesArmour.Any())
-            {
-                inventory.BoxInventorySubHeader("Armour: ");
-
-                foreach (var armour in heroesArmour)
-                {
-                    inventory.BoxInventoryArmour(armour);
+                    if (hero.Bag[i] is Weapon)
+                    {
+                        inventory.BoxInventoryWeaponSell(hero.Bag[i], i + 1);
+                    }
+                    else if (hero.Bag[i] is Armor)
+                    {
+                        inventory.BoxInventoryArmourSell(hero.Bag[i], i + 1);
+                    }
+                    else if (hero.Bag[i] is Potion)
+                    {
+                        inventory.BoxInventoryPotionSell(hero.Bag[i], i + 1);
+                    }
                 }
             }
-            // POTIONS
-            var heroesPotions = Items.GetListOfItems(hero.Bag, typeof(Potion));
-            if (heroesPotions.Any())
+            else
             {
-                inventory.BoxInventorySubHeader("Potions: ");
-
-                foreach (var potion in heroesPotions)
+                var heroesWeapons = Items.GetListOfItems(hero.Bag, typeof(Weapon));
+                if (heroesWeapons.Any())
                 {
-                    inventory.BoxInventoryPotion(potion);
+                    inventory.BoxInventorySubHeader("Weapons: ");
+
+                    foreach (var weapon in heroesWeapons)
+                    {
+                        inventory.BoxInventoryWeapon(weapon);
+                    }
+                    inventory.BoxInventoryMiddleBreak();
+                }
+                // ARMOUR 
+                var heroesArmour = Items.GetListOfItems(hero.Bag, typeof(Armor));
+                if (heroesArmour.Any())
+                {
+                    inventory.BoxInventorySubHeader("Armour: ");
+
+                    foreach (var armour in heroesArmour)
+                    {
+                        inventory.BoxInventoryArmour(armour);
+                    }
+                }
+                // POTIONS
+                var heroesPotions = Items.GetListOfItems(hero.Bag, typeof(Potion));
+                if (heroesPotions.Any())
+                {
+                    inventory.BoxInventorySubHeader("Potions: ");
+
+                    foreach (var potion in heroesPotions)
+                    {
+                        inventory.BoxInventoryPotion(potion);
+                    }
                 }
             }
-
             inventory.BoxEnd();
             // OUTPUT
             inventory.Output();

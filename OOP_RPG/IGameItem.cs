@@ -10,6 +10,7 @@ namespace OOP_RPG
     {
         string Name { get; }
         int Value { get; }
+        int ResaleValue { get; }
 
         int GetAttribute();
         void GetDescription();

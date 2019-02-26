@@ -265,6 +265,26 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(BlockMin, CursorPos++);
         }
 
+        public void BoxInventoryWeaponSell(IGameItem eqpdWeapon, int index)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.Write($"{index} > {eqpdWeapon.Name}"); // hero.Name
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("<");
+            Console.Write($"STR: {eqpdWeapon.GetAttribute()}"); // Strength
+            Console.Write(" | ");
+            Console.Write($"ReSell: {eqpdWeapon.ResaleValue}"); // Value
+            Console.Write(">");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
         public void BoxInventoryArmour(IGameItem eqpdArmour)
         {
             Console.Write("\u2551");
@@ -298,6 +318,26 @@ namespace OOP_RPG.UI
             Console.Write($"DEF: {eqpdArmour.GetAttribute()}"); // Defense
             Console.Write(" | ");
             Console.Write($"Value: {eqpdArmour.Value}"); // Value
+            Console.Write(">");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        public void BoxInventoryArmourSell(IGameItem eqpdArmour, int index)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.Write($"{index} > {eqpdArmour.Name}"); // hero.Name
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("<");
+            Console.Write($"DEF: {eqpdArmour.GetAttribute()}"); // Defense
+            Console.Write(" | ");
+            Console.Write($"ReSell: {eqpdArmour.ResaleValue}"); // Value
             Console.Write(">");
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
@@ -338,6 +378,26 @@ namespace OOP_RPG.UI
             Console.Write($"Heals: +{potion.GetAttribute()}"); // Healing Value
             Console.Write(" | ");
             Console.Write($"Value: {potion.Value}"); // Value in gold
+            Console.Write(">");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        internal void BoxInventoryPotionSell(IGameItem potion, int index)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.Write($"{index} > {potion.Name}"); // Potion name
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("<");
+            Console.Write($"Heals: +{potion.GetAttribute()}"); // Healing Value
+            Console.Write(" | ");
+            Console.Write($"ReSell: {potion.ResaleValue}"); // Value in gold
             Console.Write(">");
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
