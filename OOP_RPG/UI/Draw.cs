@@ -304,6 +304,46 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(BlockMin, CursorPos++);
         }
 
+        internal void BoxInventoryPotion(IGameItem potion)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.Write($"> {potion.Name}"); // Potion name
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("<");
+            Console.Write($"Heals: +{potion.GetAttribute()}"); // Healing Value.
+            Console.Write(" | ");
+            Console.Write($"Value: {potion.Value}"); // Value in gold
+            Console.Write(">");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        internal void BoxInventoryPotion(IGameItem potion, int index)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.Write($"{index} > {potion.Name}"); // Potion name
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("<");
+            Console.Write($"Heals: +{potion.GetAttribute()}"); // Healing Value
+            Console.Write(" | ");
+            Console.Write($"Value: {potion.Value}"); // Value in gold
+            Console.Write(">");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
         public void BoxInventoryMiddleBreak()
         {
             Console.Write("\u2551");

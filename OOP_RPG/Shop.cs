@@ -9,12 +9,8 @@ namespace OOP_RPG
     static class Shop
     {
         // Sort by options later on?
-        // TODO: maybe hide Buy weapon, buy armour, if their inventory is empty.
         // TODO: Allow equiping in the store
         // TODO: Avoid passing around hero, right?
-
-        // TODO: Can also use a single list of both ShopWeapons and ShopArmours, calling it Shop inventory, this is 
-        // just remnants of pre Items interface update.
         // TODO: When displaying items, sort the list by type, then display, maybe allow the user to sort the list by item??
         public static List<IGameItem> ShopItems = new List<IGameItem>
         {
@@ -31,6 +27,9 @@ namespace OOP_RPG
             new Armor("Iron Chestplate", 3, 20),
             new Armor("Leather Chestplate", 1, 5),
             new Armor("Dragon Armour Set", 25, 10000),
+            new Potion("Small Health Potion", 5, 10),
+            new Potion("Health Potion", 15, 30),
+            new Potion("Large Health Potion", 30, 60),
         };
 
         public static void CreateShop(Hero hero)
@@ -41,22 +40,6 @@ namespace OOP_RPG
 
         public static void DrawShop(Hero hero)
         {
-            //Console.WriteLine("===== Welcome to the Shop! =====");
-            //Console.WriteLine("====== Items for Sale: =======");
-
-            //if (ShopItems.Any())
-            //{
-            //    UI.DisplayItemList(ShopItems);
-            //}
-
-            //Console.WriteLine("======== Hero inventory ========");
-            //Console.WriteLine($"## {hero.Name}'s gold: ${hero.Gold} ##");
-            //Console.WriteLine("____________ Weapons ___________");
-            //// TODO: Send weapon class type into these two methods
-            //UI.DisplayItemList(Items.GetListOfItems(hero.Bag, typeof(Weapon)));
-            //Console.WriteLine("____________ Armour ____________");
-            //UI.DisplayItemList(Items.GetListOfItems(hero.Bag, typeof(Armor)));
-            //Console.WriteLine("================================");
             Console.Clear();
             UI.DefaultBoxes.DrawInventory(hero, UI.Grid.Left);
             UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.Right);
@@ -66,9 +49,7 @@ namespace OOP_RPG
                     "1. Buy an item",
                     "2. Exit Store"
                 }, UI.Grid.Center);
-
         }
-
 
         private static void ShopInput(Hero hero)
         {

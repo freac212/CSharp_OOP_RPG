@@ -36,33 +36,6 @@ namespace OOP_RPG
         }
 
         //These are the Methods of our Class.
-        public void ShowStats()
-        {
-            Console.Clear();
-            Console.WriteLine("*****" + this.Name + "*****");
-
-            Console.Write("Strength: " + this.Strength);
-            if (this.EquippedWeapon != null)
-            {
-                Console.WriteLine($"(+{this.EquippedWeapon.GetAttribute()})");
-            }
-            else
-            {
-                Console.WriteLine();
-            }
-
-            Console.Write("Defense: " + this.Defense);
-            if (this.EquippedArmour != null)
-            {
-                Console.WriteLine($"(+{this.EquippedArmour.GetAttribute()})");
-            }
-            else
-            {
-                Console.WriteLine();
-            }
-            Console.WriteLine("Hitpoints: " + this.CurrentHP + "/" + this.OriginalHP);
-        }
-
         public void ShowInventory()
         {
             Console.Clear();
@@ -137,7 +110,8 @@ namespace OOP_RPG
                     this.EquippedArmour = null;
                     return true;
                 }
-            } else
+            }
+            else
             {
                 this.EquippedWeapon = null;
                 this.EquippedArmour = null;
@@ -145,26 +119,62 @@ namespace OOP_RPG
             return false;
         }
 
-    public void AddGold(int gold)
-    {
-        //TODO: Add gold coins check, ensure the value is a positive int.
-        Gold += gold;
-    }
+        public void AddGold(int gold)
+        {
+            //TODO: Add gold coins check, ensure the value is a positive int.
+            Gold += gold;
+        }
 
-    public void RemoveGold(int gold)
-    {
-        if (Gold - gold >= 0)
+        public void RemoveGold(int gold)
         {
-            Gold -= gold;
+            if (Gold - gold >= 0)
+            {
+                Gold -= gold;
+            }
+            else
+            {
+                throw new Exception("Negative gold value.");
+            }
+            // Else you broke dood.
+            // Nah this is more of a safe check, this actual check will happen in
+            // this store class, and the purchase will be denied if they don't have
+            // Enough funds.
         }
-        else
+
+        public void UseHealthPotion(IGameItem potion)
         {
-            throw new Exception("Negative gold value.");
+            // If the potion is going to over heal the player, deny it, and just set the
+            // player HP to their HP cap.
+            if(CurrentHP + potion.GetAttribute() >= OriginalHP)
+            {
+                CurrentHP = OriginalHP;
+            } else
+            {
+                // Else, heal up the value of the potion.
+                CurrentHP += potion.GetAttribute();
+            }
+            // Remove potion from inventory.
+            this.Bag.Remove(potion);
         }
-        // Else you broke dood.
-        // Nah this is more of a safe check, this actual check will happen in
-        // this store class, and the purchase will be denied if they don't have
-        // Enough funds.
+
+        public void UseHealthPotion(int potionIndex)
+        {
+            // If the potion is going to over heal the player, deny it, and just set the
+            // player HP to their HP cap.
+            var potions = Items.GetListOfItems(this.Bag, typeof(Potion));
+            var potion = potions[potionIndex];
+
+            if (CurrentHP + potion.GetAttribute() >= OriginalHP)
+            {
+                CurrentHP = OriginalHP;
+            }
+            else
+            {
+                // Else, heal up the value of the potion.
+                CurrentHP += potion.GetAttribute();
+            }
+            // Remove potion from inventory.
+            this.Bag.Remove(potion);
+        }
     }
-}
 }

@@ -72,6 +72,17 @@ namespace OOP_RPG.UI
                     inventory.BoxInventoryArmour(armour);
                 }
             }
+            // POTIONS
+            var heroesPotions = Items.GetListOfItems(hero.Bag, typeof(Potion));
+            if (heroesPotions.Any())
+            {
+                inventory.BoxInventorySubHeader("Potions: ");
+
+                foreach (var potion in heroesPotions)
+                {
+                    inventory.BoxInventoryPotion(potion);
+                }
+            }
 
             inventory.BoxEnd();
             // OUTPUT
@@ -118,7 +129,10 @@ namespace OOP_RPG.UI
                 else if (items[i] is Armor)
                 {
                     storeBox.BoxInventoryArmour(items[i], i + 1);
-
+                }
+                else if (items[i] is Potion)
+                {
+                    storeBox.BoxInventoryPotion(items[i], i + 1);
                 }
             }
             storeBox.BoxMiddleBreak();
