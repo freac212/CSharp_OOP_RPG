@@ -56,15 +56,15 @@ namespace OOP_RPG.UI
                 {
                     if (hero.Bag[i] is Weapon)
                     {
-                        inventory.BoxInventoryWeaponSell(hero.Bag[i], i + 1);
+                        inventory.BoxInventoryWeapon(hero.Bag[i], i + 1);
                     }
                     else if (hero.Bag[i] is Armor)
                     {
-                        inventory.BoxInventoryArmourSell(hero.Bag[i], i + 1);
+                        inventory.BoxInventoryArmour(hero.Bag[i], i + 1);
                     }
                     else if (hero.Bag[i] is Potion)
                     {
-                        inventory.BoxInventoryPotionSell(hero.Bag[i], i + 1);
+                        inventory.BoxInventoryPotion(hero.Bag[i], i + 1);
                     }
                 }
             }
@@ -144,15 +144,15 @@ namespace OOP_RPG.UI
             {
                 if (items[i] is Weapon)
                 {
-                    storeBox.BoxInventoryWeapon(items[i], i + 1);
+                    storeBox.BoxInventoryWeapon(items[i], i + 1, false);
                 }
                 else if (items[i] is Armor)
                 {
-                    storeBox.BoxInventoryArmour(items[i], i + 1);
+                    storeBox.BoxInventoryArmour(items[i], i + 1, false);
                 }
                 else if (items[i] is Potion)
                 {
-                    storeBox.BoxInventoryPotion(items[i], i + 1);
+                    storeBox.BoxInventoryPotion(items[i], i + 1, false);
                 }
             }
             storeBox.BoxMiddleBreak();
