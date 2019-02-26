@@ -71,20 +71,15 @@ namespace OOP_RPG
             {
                 //DrawShop(hero);
                 Console.Clear();
-                UI.DefaultBoxes.DrawInventory(hero, UI.Grid.GridLeft());
-                UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.GridRight());
+                UI.DefaultBoxes.DrawInventory(hero, UI.Grid.Left);
+                UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.Right);
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
                     "Please choose an option.",
                     "1. Buy a Weapon",
                     "2. Buy Armour",
                     "3. Exit Store"
-                }, UI.Grid.GridCenter());
-
-                //Console.WriteLine("Please choose an option by entering a number.");
-                //Console.WriteLine("1. Buy a Weapon");
-                //Console.WriteLine("2. Buy Armour");
-                //Console.WriteLine("3. Exit Store");
+                }, UI.Grid.Center);
 
                 shopMainInput = Console.ReadLine();
 
@@ -99,13 +94,13 @@ namespace OOP_RPG
                     if (Items.GetListOfItems(ShopItems, typeof(Weapon)).Any())
                     {
                         Console.Clear();
-                        UI.DefaultBoxes.DrawInventory(hero, UI.Grid.GridLeft());
-                        UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.GridRight());
+                        UI.DefaultBoxes.DrawInventory(hero, UI.Grid.Left);
+                        UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.Right);
                         UI.DefaultBoxes.DrawOptions(new List<string>
                         {
                             "Please choose an item #",
                             "Press enter to exit..",
-                        }, UI.Grid.GridCenter());
+                        }, UI.Grid.Center);
 
                         shopInput = Console.ReadLine();
                         if (shopInput == "")
@@ -114,23 +109,40 @@ namespace OOP_RPG
                         }
                         else
                         {
-                            // Input needs validation, cannot be 0
+
                             int.TryParse(shopInput, out int shopInputConverted);
-                            if (BuyItem(shopInputConverted, hero))
+                            // Input validation, cannot be 0
+                            if (shopInputConverted > 0)
                             {
-                                UI.PrintToOutput("Weapon purchased!");
+                                // If the item is purchased, return true.
+                                if (BuyItem(shopInputConverted, hero))
+                                {
+                                    UI.Draw.PrintToOutput(new List<string>{
+                                        "Weapon purchased!",
+                                        "Press any button to return to shop..."
+                                    });
+                                }
+                                else
+                                {
+                                    UI.Draw.PrintToOutput(new List<string> {
+                                        "Not enough gold!",
+                                        "Press any button to return to shop..."
+                                    });
+                                }
                             }
                             else
                             {
-                                UI.PrintToOutput("Not enough gold!");
+                                UI.Draw.PrintToOutput(new List<string> {
+                                    "Input value was either 0 or less",
+                                    "Press any button to return to shop..."
+                                });
                             }
-                            Console.WriteLine("Press any button to return to shop...");
                             Console.ReadLine();
                         }
                     }
                     else
                     {
-                        UI.PrintToOutput(new List<string> { "There's no Weapons to buy, check again later.", "Press any button to return to shop..." });
+                        UI.Draw.PrintToOutput(new List<string> { "There's no Weapons to buy, check again later.", "Press any button to return to shop..." });
                         Console.ReadLine();
                         break;
                     }
@@ -146,13 +158,13 @@ namespace OOP_RPG
                     if (Items.GetListOfItems(ShopItems, typeof(Armor)).Any())
                     {
                         Console.Clear();
-                        UI.DefaultBoxes.DrawInventory(hero, UI.Grid.GridLeft());
-                        UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.GridRight());
+                        UI.DefaultBoxes.DrawInventory(hero, UI.Grid.Left);
+                        UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.Right);
                         UI.DefaultBoxes.DrawOptions(new List<string>
                         {
                             "Please choose an item #",
                             "Press enter to exit..",
-                        }, UI.Grid.GridCenter());
+                        }, UI.Grid.Center);
                         shopInput = Console.ReadLine();
 
                         if (shopInput == "")
@@ -161,23 +173,33 @@ namespace OOP_RPG
                         }
                         else
                         {
-                            // Input needs validation, cannot be 0
+
                             int.TryParse(shopInput, out int shopInputConverted);
-                            if (BuyItem(shopInputConverted, hero))
+                            // Input validation, cannot be 0 or less
+                            if (shopInputConverted > 0)
                             {
-                                UI.PrintToOutput("Armour purchased!");
+                                // If the item is purchased, return true.
+                                if (BuyItem(shopInputConverted, hero))
+                                {
+                                    UI.Draw.PrintToOutput("Armour purchased!");
+                                }
+                                else
+                                {
+                                    UI.Draw.PrintToOutput("Not enough gold!");
+                                }
                             }
                             else
                             {
-                                UI.PrintToOutput("Not enough gold!");
+                                UI.Draw.PrintToOutput("Input value was either 0 or less");
                             }
-                            UI.PrintToOutput("Press any button to return to shop...");
+
+                            UI.Draw.PrintToOutput("Press any button to return to shop...");
                             Console.ReadLine();
                         }
                     }
                     else
                     {
-                        UI.PrintToOutput(new List<string> { "There's no Armour to buy, check again later.", "Press any button to return to shop..." });
+                        UI.Draw.PrintToOutput(new List<string> { "There's no Armour to buy, check again later.", "Press any button to return to shop..." });
                         Console.ReadLine();
                         break;
                     }
@@ -189,12 +211,10 @@ namespace OOP_RPG
 
         public static bool BuyItem(int itemID, Hero hero)
         {
-            // TODO: Refactor, add buy item! not buy weapons, armour etc. This works better after making it a single list.
-            // Get the Weapon they're looking for.
             var itemIndex = itemID - 1;
             var getItem = (from item in ShopItems
-                             where itemIndex == ShopItems.IndexOf(item)
-                             select item).FirstOrDefault();
+                           where itemIndex == ShopItems.IndexOf(item)
+                           select item).FirstOrDefault();
 
             // Check if the hero has enough money
             if (hero.Gold >= getItem.Value)

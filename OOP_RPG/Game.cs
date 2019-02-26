@@ -31,7 +31,7 @@ namespace OOP_RPG
             while (input != "5")
             {
                 Console.Clear();
-                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
+                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
                 // Display options
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
@@ -42,7 +42,7 @@ namespace OOP_RPG
                     "3. Fight Monster",
                     "4. Enter Store",
                     "5. Exit"
-                }, UI.Grid.GridCenter());
+                }, UI.Grid.Center);
                 // Display output
 
                 input = Console.ReadLine();
@@ -117,7 +117,7 @@ namespace OOP_RPG
 
                     Console.WriteLine("====================");
                     Console.WriteLine("======= Bag ========");
-                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, typeof(Weapon)));
+                    UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Weapon)));
                     Console.WriteLine("====================");
                     Console.WriteLine("Choose a weapon number to equip.");
                     Console.WriteLine("Or choose 0 to return to Inventory.");
@@ -162,7 +162,7 @@ namespace OOP_RPG
 
                     Console.WriteLine("====================");
                     Console.WriteLine("======= Bag ========");
-                    UI.DisplayItemList(Items.GetListOfItems(Hero.Bag, typeof(Armor)));
+                    UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Armor)));
                     Console.WriteLine("====================");
                     Console.WriteLine("Choose an Armour number to equip.");
                     Console.WriteLine("Or choose 0 to return to Inventory.");

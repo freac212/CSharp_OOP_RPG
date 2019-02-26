@@ -20,14 +20,14 @@ namespace OOP_RPG
             while (CurrentMonster.CurrentHP > 0 && Hero.CurrentHP > 0)
             {
                 Console.Clear();
-                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
-                UI.PrintToOutput("You've encountered " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
+                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+                UI.Draw.PrintToOutput("You've encountered " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
                 CurrentMonster.CurrentHP + $" HP. Difficulty: {CurrentMonster.Difficulty}. What will you do?");
 
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
                     "1. Fight"
-                }, UI.Grid.GridCenter());
+                }, UI.Grid.Center);
 
                 var input = Console.ReadLine();
 
@@ -74,7 +74,7 @@ namespace OOP_RPG
                 CurrentMonster.CurrentHP -= damage;
             }
 
-            UI.PrintToOutput("You did " + damage + " damage!");
+            UI.Draw.PrintToOutput("You did " + damage + " damage!");
 
             if (CurrentMonster.CurrentHP <= 0)
             {
@@ -112,7 +112,7 @@ namespace OOP_RPG
                 Hero.CurrentHP -= damage;
             }
 
-            UI.PrintToOutput(CurrentMonster.Name + " does " + damage + " damage!");
+            UI.Draw.PrintToOutput(CurrentMonster.Name + " does " + damage + " damage!");
 
             if (Hero.CurrentHP <= 0)
             {
@@ -125,8 +125,8 @@ namespace OOP_RPG
             // Fight reward will be called here.
             var GoldWon = Loot.LootGenerator(Hero, CurrentMonster.Difficulty);
             Console.Clear();
-            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
-            UI.PrintToOutput(new List<string>
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+            UI.Draw.PrintToOutput(new List<string>
             {
                     CurrentMonster.Name + " has been defeated! You win the battle!",
                     $"Rewards: Gold: {GoldWon}"
@@ -134,19 +134,19 @@ namespace OOP_RPG
             UI.DefaultBoxes.DrawOptions(new List<string>
                 {
                     "Press any key to continue..."
-                }, UI.Grid.GridCenter());
+                }, UI.Grid.Center);
             Console.ReadLine();
         }
 
         private void Lose()
         {
             Console.Clear();
-            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.GridLeft());
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
             UI.DefaultBoxes.DrawOptions(new List<string>
                 {
                     "You've been defeated! :( GAME OVER."
-                }, UI.Grid.GridCenter());
-            UI.PrintToOptions("Press any key to exit the game");
+                }, UI.Grid.Center);
+            UI.Draw.PrintToOptions("Press any key to exit the game");
             Console.ReadKey();
         }
     }
