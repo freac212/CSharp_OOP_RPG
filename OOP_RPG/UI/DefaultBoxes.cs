@@ -186,5 +186,37 @@ namespace OOP_RPG.UI
             storeBox.BoxMiddleBreak();
             storeBox.BoxEnd();
         }
+
+        internal static void DrawAchievements(AchievementList achievements, Grid grid)
+        {
+            int BlockMax = grid.GridMax;
+            int BlockMin = grid.GridMin;
+
+            var achieveBox = new Draw(BlockMin, BlockMax);
+            // TITLE
+            achieveBox.BoxTop();
+            achieveBox.BoxTitle("Achievements");
+            achieveBox.BoxMiddleBreak();
+            // ACHIEVEMENTS
+            achieveBox.BoxInventorySubHeader("Completed: ");
+            foreach (var achieve in achievements.CompletedAchievements)
+            {
+                achieveBox.BoxItemGenericAchievement(achieve.Achievement.AchievementName);
+                achieveBox.BoxItemGenericAchievementAttribute("Points", achieve.Achievement.PointValue);
+                achieveBox.BoxItemGenericAchievementAttribute(achieve.TimeCompleted);
+            }
+            achieveBox.BoxMiddleBreak();
+            achieveBox.BoxTitle($"Total Points: {achievements.GetTotalPoints()}");
+            achieveBox.BoxMiddleBreak();
+            if (achievements.DefeatedMonsters.Any())
+            {
+                achieveBox.BoxInventorySubHeader("Monsters Killed: ");
+                foreach (var monster in achievements.DefeatedMonsters)
+                {
+                    achieveBox.BoxItemGenericMonster(monster.Name, "Difficulty", monster.Difficulty);
+                }
+            }
+            achieveBox.BoxEnd();
+        }
     }
 }

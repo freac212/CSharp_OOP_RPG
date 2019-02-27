@@ -43,6 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Achievement.cs" />
+    <Compile Include="AchievementList.cs" />
+    <Compile Include="CompletedAchievement.cs" />
     <Compile Include="Items\Armor.cs" />
     <Compile Include="Difficulty.cs" />
     <Compile Include="Fight.cs" />

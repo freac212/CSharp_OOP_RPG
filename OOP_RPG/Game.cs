@@ -7,10 +7,12 @@ namespace OOP_RPG
     public class Game
     {
         public Hero Hero { get; }
+        public AchievementList achievements { get; }
 
         public Game()
         {
             Hero = new Hero();
+            achievements = new AchievementList();
         }
 
         public void Start()
@@ -41,6 +43,7 @@ namespace OOP_RPG
                     "3. Enter Store",
                     "4. Exit"
                 }, UI.Grid.Center);
+                UI.DefaultBoxes.DrawAchievements(achievements, UI.Grid.Right);
 
                 input = Console.ReadLine();
 
@@ -323,7 +326,7 @@ namespace OOP_RPG
 
         private void Fight()
         {
-            var fight = new Fight(Hero);
+            var fight = new Fight(Hero, achievements);
 
             fight.Start();
         }

@@ -7,13 +7,14 @@ namespace OOP_RPG
     {
         private Monster CurrentMonster { get; }
         private Hero Hero { get; }
+        private AchievementList Achievements { get; }
         private bool LostFight = false;
 
-        public Fight(Hero game)
+        public Fight(Hero game, AchievementList achieve)
         {
             Hero = game;
-
-            CurrentMonster = MonsterPicker.GetMonster(Difficulty.Hard);
+            Achievements = achieve;
+            CurrentMonster = MonsterPicker.GetMonster(Difficulty.Easy);
         }
 
         public void Start()
@@ -127,6 +128,9 @@ namespace OOP_RPG
 
         private void Win()
         {
+            // Check/Add-to Achievements
+            Achievements.AddToDefeatedMonsters(CurrentMonster);
+
             // Fight reward will be called here.
             var GoldWon = Loot.LootGenerator(Hero, CurrentMonster.Difficulty);
             Console.Clear();

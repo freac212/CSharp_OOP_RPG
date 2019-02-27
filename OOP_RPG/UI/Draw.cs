@@ -184,7 +184,8 @@ namespace OOP_RPG.UI
             if (hero.EquippedArmour != null && hero.EquippedShield != null)
             {
                 Console.Write($"(+{hero.EquippedArmour.GetAttribute() + hero.EquippedShield.GetAttribute()})");
-            } else if (hero.EquippedShield != null)
+            }
+            else if (hero.EquippedShield != null)
             {
                 Console.Write($"(+{hero.EquippedShield.GetAttribute()})");
             }
@@ -236,7 +237,7 @@ namespace OOP_RPG.UI
         {
             Console.Write("\u2551");
             Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
-            if(index is null)
+            if (index is null)
             {
                 Console.Write($"> {eqpdWeapon.Name}"); // hero.Name
             }
@@ -373,6 +374,62 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(BlockMin, CursorPos++);
         }
 
+        internal void BoxItemGenericMonster(string name, string genericString, Difficulty monsterdifficulty = Difficulty.none)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+
+            Console.Write($"- {name}"); // Item name
+
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("|");
+            Console.Write($"{genericString}: {monsterdifficulty}");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        internal void BoxItemGenericAchievement(string name)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+
+            Console.Write($"- {name}"); // Item name
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        internal void BoxItemGenericAchievementAttribute(string attributeName, int attributeVal)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("|");
+            Console.Write($"{attributeName}: {attributeVal}"); // Point vals
+
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        internal void BoxItemGenericAchievementAttribute(DateTime dateAchieved)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("|");
+            Console.Write($"Achieved on: {dateAchieved.Date.ToString("u")}"); //Date value
+
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
         public void BoxInventoryMiddleBreak()
         {
             Console.Write("\u2551");
@@ -393,7 +450,7 @@ namespace OOP_RPG.UI
 
         public void Output()
         {
-            Console.SetCursorPosition(0, Console.CursorTop + 1);
+            Console.SetCursorPosition(0, Console.CursorTop);
 
             Console.Write("\u2554");
             Console.Write(new string('\u2550', (Console.BufferWidth - 2)));
