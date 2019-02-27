@@ -23,14 +23,16 @@ namespace OOP_RPG
             {
                 Console.Clear();
                 UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
-                UI.Draw.PrintToOutput("You've encountered " + CurrentMonster.Name + "! " + CurrentMonster.Strength + " Strength/" + CurrentMonster.Defense + " Defense/" +
-                CurrentMonster.CurrentHP + $" HP. Difficulty: {CurrentMonster.Difficulty}. What will you do?");
-
+                UI.Draw.PrintToOutput(new List<string> {
+                    "You've encountered " + CurrentMonster.Name + "! ",
+                    $"Strength/{CurrentMonster.Strength} Defense/{CurrentMonster.Defense}" + CurrentMonster.CurrentHP + $" HP. Difficulty: {CurrentMonster.Difficulty}. What will you do?"
+                    });
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
                     "1. Fight",
                     "2. Run"
                 }, UI.Grid.Center);
+                UI.Draw.UpdateInputCursor();
 
                 var input = Console.ReadLine();
 
@@ -144,6 +146,7 @@ namespace OOP_RPG
                 {
                     "Press any key to continue..."
                 }, UI.Grid.Center);
+            UI.Draw.UpdateInputCursor();
             Console.ReadLine();
         }
 
@@ -160,6 +163,7 @@ namespace OOP_RPG
                 {
                     "Press any key to exit the game."
                 }, UI.Grid.Center);
+            UI.Draw.UpdateInputCursor();
             Console.ReadKey();
         }
 
@@ -176,6 +180,7 @@ namespace OOP_RPG
                 {
                     "Cowardice only gets you so far..",
                 });
+            UI.Draw.UpdateInputCursor();
             Console.ReadKey();
         }
 
@@ -191,6 +196,8 @@ namespace OOP_RPG
                         {
                             "You failed to run from the fight...",
                         });
+            UI.Draw.UpdateInputCursor();
+            Console.ReadLine();
             MonsterTurn();
         }
 

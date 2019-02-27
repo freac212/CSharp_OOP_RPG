@@ -44,6 +44,7 @@ namespace OOP_RPG
                     "4. Exit"
                 }, UI.Grid.Center);
                 UI.DefaultBoxes.DrawAchievements(achievements, UI.Grid.Right);
+                UI.Draw.UpdateInputCursor();
 
                 input = Console.ReadLine();
 
@@ -74,16 +75,22 @@ namespace OOP_RPG
 
             while (inventoryInput != "0")
             {
-                Hero.ShowInventory();
-                Console.WriteLine("1. Equip Weapon");
-                Console.WriteLine("2. Equip Armour");
-                Console.WriteLine("3. Equip Shield");
-                Console.WriteLine("4. UnEquip Weapon");
-                Console.WriteLine("5. UnEquip Armour");
-                Console.WriteLine("6. UnEquip Shield");
-                Console.WriteLine("7. UnEquip All");
-                Console.WriteLine("8. Use a HealthPotion");
-                Console.WriteLine("Press 0 to return to main menu.");
+                Console.Clear();
+                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+                UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "1. Equip Weapon",
+                    "2. Equip Armour",
+                    "3. Equip Shield",
+                    "4. UnEquip Weapon",
+                    "5. UnEquip Armour",
+                    "6. UnEquip Shield",
+                    "7. UnEquip All",
+                    "8. Use a HealthPotion",
+                    "Press 0 to return to main menu."
+                }, UI.Grid.Center);
+                UI.Draw.UpdateInputCursor();
+
                 inventoryInput = Console.ReadLine();
 
                 if (inventoryInput == "1")
@@ -123,15 +130,17 @@ namespace OOP_RPG
 
         private void UseHealthPotion()
         {
+            Console.Clear();
+            UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Potion)));
             var potionUseInput = "";
-            Console.WriteLine("===== Potions =====");
             if (Items.GetListOfItems(Hero.Bag, typeof(Potion)).Any())
             {
-                Console.WriteLine("======= Bag ========");
-                UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Potion)));
-                Console.WriteLine("====================");
-                Console.WriteLine("Choose a potion to use.");
-                Console.WriteLine("Or choose 0 to return to Inventory.");
+                UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "Choose an item to use number to use!",
+                    "Press 0 to return to main menu."
+                }, UI.Grid.Center);
+                UI.Draw.UpdateInputCursor();
 
                 potionUseInput = Console.ReadLine();
 
@@ -149,181 +158,145 @@ namespace OOP_RPG
                     {
                         // Then use that potion
                         Hero.UseHealthPotion(potionIndex);
-                        Console.WriteLine("Potion used!");
-                        Console.WriteLine($"Your HP is now {Hero.CurrentHP}/{Hero.OriginalHP}");
-
+                        UI.Draw.PrintToOutput(new List<string> {
+                            "Item used!",
+                            $"Your HP is now {Hero.CurrentHP}/{Hero.OriginalHP}"
+                        });
                     }
                     else
                     {
-                        Console.WriteLine("There's no potion with that number...");
-                        Console.WriteLine("Press any key to return to Inventory.");
-                        Console.ReadKey();
+                        UI.Draw.PrintToOutput(new List<string> {
+                            "There's no potion with that number..."
+                        });
                     }
+                    UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+                    UI.Draw.UpdateInputCursor();
+                    Console.ReadKey();
                 }
             }
             else
             {
-                Console.WriteLine("You don't have any health potions... ");
-                Console.WriteLine("Go buy some from the store!");
+                UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+                UI.Draw.PrintToOutput(new List<string> {
+                    "You don't have any health potions... ",
+                    "Go buy some from the store!"
+                });
+                UI.Draw.UpdateInputCursor();
+                Console.ReadKey();
             }
-            Console.WriteLine("Press any key to return to Inventory.");
-            Console.ReadKey();
         }
 
         private void UnEquipAll()
         {
             Hero.UpEquip();
-            Console.WriteLine("All Items UnEquiped");
-            Console.WriteLine("Press any key to return to Inventory.");
+            Console.Clear();
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+            UI.Draw.PrintToOutput("All Items UnEquiped");
+            UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "Press any key to return to main menu."
+                }, UI.Grid.Center);
+            UI.Draw.UpdateInputCursor();
             Console.ReadKey();
         }
 
         private void UnEquip(Type type)
         {
+            Console.Clear();
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
             if (Hero.UpEquip(type))
             {
-                Console.WriteLine(type + " UnEquiped.");
+                UI.Draw.PrintToOutput("Item UnEquiped.");
             }
             else
             {
-                Console.WriteLine("There's no " + type + " to UnEquip.");
-
+                UI.Draw.PrintToOutput("There was no item to UnEquip..");
             }
-            Console.WriteLine("Press any key to return to Inventory.");
+            UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+            UI.Draw.UpdateInputCursor();
             Console.ReadKey();
         }
 
         private void Equip(Type itemType)
         {
             var equipInput = "";
-            Console.WriteLine("===== Equipped =====");
 
-            if (itemType == typeof(Weapon))
+            Console.Clear();
+            if (itemType == typeof(Weapon) && Items.GetListOfItems(Hero.Bag, typeof(Weapon)).Any())
             {
-                if (Hero.EquippedArmour != null)
+                UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Weapon)));
+                UI.DefaultBoxes.DrawOptions(new List<string>
                 {
-                    Console.Write($"Current {itemType}: ");
-                    Console.WriteLine(Hero.EquippedWeapon.Name);
-                }
-                else
-                {
-                    Console.WriteLine("No Weapon is currently equipped.");
-                }
-                Console.WriteLine("======= Bag ========");
-                UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Weapon)));
-                Console.WriteLine("====================");
+                    "Choose an item number to equip..",
+                    "Press 0 to return to main menu."
+                }, UI.Grid.Center);
+                TakeInput();
             }
-            else if (itemType == typeof(Armor))
+            else if (itemType == typeof(Armor) && Items.GetListOfItems(Hero.Bag, typeof(Armor)).Any())
             {
-                if (Hero.EquippedArmour != null)
+                UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Armor)));
+                UI.DefaultBoxes.DrawOptions(new List<string>
                 {
-                    Console.Write($"Current {itemType}: ");
-                    Console.WriteLine(Hero.EquippedArmour.Name);
-                }
-                else
-                {
-                    Console.WriteLine("No Armour is currently equipped.");
-                }
-                Console.WriteLine("======= Bag ========");
-                UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Armor)));
-                Console.WriteLine("====================");
+                    "Choose an item number to equip..",
+                    "Press 0 to return to main menu."
+                }, UI.Grid.Center);
+                TakeInput();
             }
-            else if (itemType == typeof(Shield))
+            else if (itemType == typeof(Shield) && Items.GetListOfItems(Hero.Bag, typeof(Shield)).Any())
             {
-                if (Hero.EquippedShield != null)
+                UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Shield)));
+                UI.DefaultBoxes.DrawOptions(new List<string>
                 {
-                    Console.Write($"Current {itemType}: ");
-                    Console.WriteLine(Hero.EquippedShield.Name);
-                }
-                else
-                {
-                    Console.WriteLine("No Shield is currently equipped.");
-                }
-                Console.WriteLine("======= Bag ========");
-                UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Shield)));
-                Console.WriteLine("====================");
-            }
-            Console.WriteLine("Choose an " + itemType + " number to equip.");
-            Console.WriteLine("Or choose 0 to return to Inventory.");
-
-            equipInput = Console.ReadLine();
-
-            while (!int.TryParse(equipInput, out int _x))
-            {
-                Console.WriteLine("That is not a number, please choose again.");
-                equipInput = Console.ReadLine();
-            }
-
-            // If the input can be parsed as a number
-            if (int.TryParse(equipInput, out int itemIndex) && itemIndex != 0)
-            {
-                // If the number is an index of armour bag
-                if ((itemIndex -= 1) <= Items.GetListOfItems(Hero.Bag, itemType).Count - 1)
-                {
-                    // Then Equip that Item
-                    Hero.Equip(itemIndex, itemType);
-                }
-                else
-                {
-                    Console.WriteLine("There's no " + itemType + " with that number...");
-                    Console.WriteLine("Press any key to return to Inventory.");
-                    Console.ReadKey();
-                }
-            }
-        }
-
-        private void EquipWeapon()
-        {
-            // Show weapons 
-            //  Equipped
-            //  Un-Equipped
-            // Have options 
-            //  Equip weapon
-            //  Un-Equip Current Weapon
-
-            var weaponEquip = "";
-            Console.WriteLine("===== Equipped =====");
-            if (Hero.EquippedWeapon != null)
-            {
-                Console.WriteLine($"Current Weapon: {Hero.EquippedWeapon.Name}");
+                    "Choose an item number to equip..",
+                    "Press 0 to return to main menu."
+                }, UI.Grid.Center);
+                TakeInput();
             }
             else
             {
-                Console.WriteLine("No weapon is currently equipped.");
-            }
-
-            Console.WriteLine("======= Bag ========");
-            UI.Draw.ItemList(Items.GetListOfItems(Hero.Bag, typeof(Weapon)));
-            Console.WriteLine("====================");
-            Console.WriteLine("Choose a weapon number to equip.");
-            Console.WriteLine("Or choose 0 to return to Inventory.");
-
-            weaponEquip = Console.ReadLine();
-
-            while (!int.TryParse(weaponEquip, out int _x))
-            {
-                Console.WriteLine("That is not a number, please choose again.");
-                weaponEquip = Console.ReadLine();
-            }
-
-            // If the input can be parsed as a number
-            if (int.TryParse(weaponEquip, out int weaponIndex) && weaponIndex != 0)
-            {
-                // If the number is an index of weapons bag
-                if ((weaponIndex -= 1) <= Items.GetListOfItems(Hero.Bag, typeof(Weapon)).Count - 1)
+                UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+                UI.Draw.PrintToOutput("There's no item of that type in your bag.");
+                UI.DefaultBoxes.DrawOptions(new List<string>
                 {
-                    // Then Equip that weapon
-                    Hero.Equip(weaponIndex, typeof(Weapon));
+                    "Press any key to return to main menu."
+                }, UI.Grid.Center);
+            }
+
+
+
+            void TakeInput()
+            {
+                UI.Draw.UpdateInputCursor();
+                equipInput = Console.ReadLine();
+                
+                while (!int.TryParse(equipInput, out int _x))
+                {
+                    UI.Draw.PrintToOutput("That is not a number, please choose again.");
+                    equipInput = Console.ReadLine();
                 }
-                else
+
+                // If the input can be parsed as a number
+                if (int.TryParse(equipInput, out int itemIndex) && itemIndex != 0)
                 {
-                    Console.WriteLine("There's no Weapon with that number...");
-                    Console.WriteLine("Press any key to return to Inventory.");
+                    Console.Clear();
+                    UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+                    // If the number is an index of armour bag
+                    if ((itemIndex -= 1) <= Items.GetListOfItems(Hero.Bag, itemType).Count - 1)
+                    {
+                        // Then Equip that Item
+                        Hero.Equip(itemIndex, itemType);
+                        UI.Draw.PrintToOutput("Item equipped!");
+                    }
+                    else
+                    {
+                        UI.Draw.PrintToOutput("There's no item with that number...");
+                    }
+                    UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+                    UI.Draw.UpdateInputCursor();
                     Console.ReadKey();
                 }
             }
         }
-
         private void Fight()
         {
             var fight = new Fight(Hero, achievements);

@@ -37,46 +37,6 @@ namespace OOP_RPG
         }
 
         //These are the Methods of our Class.
-        public void ShowInventory()
-        {
-            Console.Clear();
-            Console.WriteLine("*****  INVENTORY ******");
-            Console.WriteLine("Weapons: ");
-
-            foreach (var weapon in Items.GetListOfItems(this.Bag, typeof(Weapon)))
-            {
-                weapon.GetDescription();
-            }
-
-            Console.WriteLine("Armor: ");
-
-            foreach (var armor in Items.GetListOfItems(this.Bag, typeof(Armor)))
-            {
-                armor.GetDescription();
-            }
-
-            Console.WriteLine("Shields: ");
-            foreach (var armor in Items.GetListOfItems(this.Bag, typeof(Shield)))
-            {
-                armor.GetDescription();
-            }
-
-            Console.WriteLine("Equipped: ");
-            if (EquippedWeapon != null)
-            {
-                EquippedWeapon.GetDescription();
-            }
-            if (EquippedArmour != null)
-            {
-                EquippedArmour.GetDescription();
-            }
-            if (EquippedShield != null)
-            {
-                EquippedShield.GetDescription();
-            }
-
-            Console.WriteLine($"Gold: {this.Gold}");
-        }
 
         public void Equip(int weaponIndex, Type itemType)
         {

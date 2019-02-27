@@ -32,13 +32,22 @@ namespace OOP_RPG.UI
         // \u255D ╝
         //|                                     | <- Console width..
 
+        // Grid drawing related
         public int BlockMax { get; set; }
         private int BlockMin { get; set; }
         private int CursorPos { get; set; }
-        private const int BorderWidth = 2;
+        private const int BorderWidth = 2; // Amount of borders left and right of the box. Could be calculated.
 
+        // Input / options related
         private static int consoleOutputTop;
         private const int outputHeight = 4;
+        public static int InputCursorLeft { get; private set; }
+        public static int InputCursorTop { get; private set; }
+        public static void InputCursor(int left, int top)
+        {
+            InputCursorLeft = left;
+            InputCursorTop = top;
+        }
 
         public static void PrintToOutput(List<string> outputs)
         {
@@ -73,23 +82,23 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(lastCursorLeft, lastCursorTop);
         }
 
-        public static void PrintToOptions(List<string> options)
-        {
-            for (int i = 0; i < options.Count; i++)
-            {
-                Console.SetCursorPosition(Console.BufferWidth / 3 + 2, i);
-                Console.Write(options[i]);
-            }
-            Console.SetCursorPosition(Console.BufferWidth / 3 + 2, Console.CursorTop + 1);
+        //public static void PrintToOptions(List<string> options)
+        //{
+        //    for (int i = 0; i < options.Count; i++)
+        //    {
+        //        Console.SetCursorPosition(Console.BufferWidth / 3 + 2, i);
+        //        Console.Write(options[i]);
+        //    }
+        //    Console.SetCursorPosition(Console.BufferWidth / 3 + 2, Console.CursorTop + 1);
 
-        }
-        public static void PrintToOptions(string option)
-        {
-            Console.SetCursorPosition(Console.BufferWidth / 3 + 2, 0);
-            Console.Write(option);
-            Console.SetCursorPosition(Console.BufferWidth / 3 + 2, Console.CursorTop + 1);
+        //}
+        //public static void PrintToOptions(string option)
+        //{
+        //    Console.SetCursorPosition(Console.BufferWidth / 3 + 2, 0);
+        //    Console.Write(option);
+        //    Console.SetCursorPosition(Console.BufferWidth / 3 + 2, Console.CursorTop + 1);
 
-        }
+        //}
 
         public static void ClearLine(int lineY = 0)
         {
@@ -130,6 +139,15 @@ namespace OOP_RPG.UI
             Console.Write(new string(' ', ((BlockMax - BlockMin) / 2 - title.Length / 2) - BorderWidth));
             Console.Write(title);
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        public void BoxCursorBar()
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            InputCursor(BlockMin+1, Console.CursorTop);
             Console.Write("\u2551");
             Console.SetCursorPosition(BlockMin, CursorPos++);
         }
@@ -419,7 +437,7 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
             Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
             Console.Write("|");
-            Console.Write($"Achieved on: {dateAchieved.ToShortDateString()}"); //Date value
+            Console.Write($"Achieved on: {dateAchieved.ToString("dd/MM/yyyy HH:mm")}"); //Date value
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
             Console.SetCursorPosition(BlockMin, CursorPos++);
@@ -445,13 +463,14 @@ namespace OOP_RPG.UI
 
         public void Output()
         {
+            var consoleOutputLength = ((Console.BufferWidth/3)*2);
             Console.SetCursorPosition(0, Console.CursorTop);
 
             Console.Write("\u2554");
-            Console.Write(new string('\u2550', (Console.BufferWidth - 2)));
+            Console.Write(new string('\u2550', (consoleOutputLength - 2)));
             Console.Write("\u2557");
             var output = "Output";
-            Console.SetCursorPosition(output.Length, Console.CursorTop - 1);
+            Console.SetCursorPosition(output.Length, Console.CursorTop);
             Console.Write(output);
             Console.SetCursorPosition(0, Console.CursorTop + 1);
 
@@ -460,7 +479,7 @@ namespace OOP_RPG.UI
 
             Console.SetCursorPosition(0, Console.CursorTop + outputHeight - 1);
             Console.Write("\u255A");
-            Console.Write(new string('\u2550', (Console.BufferWidth - 2)));
+            Console.Write(new string('\u2550', (consoleOutputLength - 2)));
             Console.Write("\u255D");
             Console.SetCursorPosition(BlockMin, CursorPos++);
         }
@@ -500,6 +519,11 @@ namespace OOP_RPG.UI
                     }
                 }
             }
+        }
+
+        public static void UpdateInputCursor()
+        {
+            Console.SetCursorPosition(InputCursorLeft, InputCursorTop);
         }
     }
 }
