@@ -378,16 +378,14 @@ namespace OOP_RPG.UI
         {
             Console.Write("\u2551");
             Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
-
-            Console.Write($"- {name}"); // Item name
-
+            Console.Write($"- {name}"); // Monster name
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
             Console.SetCursorPosition(BlockMin, CursorPos++);
             Console.Write("\u2551");
             Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
             Console.Write("|");
-            Console.Write($"{genericString}: {monsterdifficulty}");
+            Console.Write($"{genericString}: {monsterdifficulty}"); // Monster difficulty
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
             Console.SetCursorPosition(BlockMin, CursorPos++);
@@ -397,7 +395,6 @@ namespace OOP_RPG.UI
         {
             Console.Write("\u2551");
             Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
-
             Console.Write($"- {name}"); // Item name
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
@@ -411,7 +408,6 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
             Console.Write("|");
             Console.Write($"{attributeName}: {attributeVal}"); // Point vals
-
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
             Console.SetCursorPosition(BlockMin, CursorPos++);
@@ -423,8 +419,7 @@ namespace OOP_RPG.UI
             Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
             Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
             Console.Write("|");
-            Console.Write($"Achieved on: {dateAchieved.Date.ToString("u")}"); //Date value
-
+            Console.Write($"Achieved on: {dateAchieved.ToShortDateString()}"); //Date value
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
             Console.Write("\u2551");
             Console.SetCursorPosition(BlockMin, CursorPos++);
