@@ -14,7 +14,7 @@ namespace OOP_RPG
         {
             Hero = game;
             Achievements = achieve;
-            CurrentMonster = MonsterPicker.GetMonster(Difficulty.Easy);
+            CurrentMonster = MonsterPicker.GetMonster();
         }
 
         public void Start()
