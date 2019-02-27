@@ -8,6 +8,7 @@ namespace OOP_RPG
 {
     public class Items
     {
+        // Const 
         private static double ValueMin = 0.6;
         private static double ValueMax = 0.8;
         //TODO: Change ItemTypes to class type!

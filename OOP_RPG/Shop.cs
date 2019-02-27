@@ -26,10 +26,14 @@ namespace OOP_RPG
             new Weapon("Obsidian Zweihander", 50, 100000),
             new Armor("Iron Chestplate", 3, 20),
             new Armor("Leather Chestplate", 1, 5),
-            new Armor("Dragon Armour Set", 25, 10000),
+            new Armor("Dragon Armour", 25, 10000),
             new Potion("Small Health Potion", 5, 10),
             new Potion("Health Potion", 15, 30),
             new Potion("Large Health Potion", 30, 60),
+            new Shield("Round Wooden Shield", 3, 40),
+            new Shield("Iron Box Shield", 4, 80),
+            new Shield("Steel Box Shield", 5, 100),
+            new Shield("Obsidian Shield", 10, 1000)
         };
 
         public static void CreateShop(Hero hero)

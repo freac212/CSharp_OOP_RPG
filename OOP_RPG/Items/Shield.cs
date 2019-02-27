@@ -1,13 +1,13 @@
-namespace OOP_RPG
+﻿namespace OOP_RPG
 {
-    public class Armor : IGameItem
+    internal class Shield : IGameItem
     {
         public string Name { get; }
         public int Value { get; }
         public int ResaleValue { get; }
         private int Defense { get; }
 
-        public Armor(string name, int defense, int value)
+        public Shield(string name, int defense, int value)
         {
             Name = name;
             Value = value;
@@ -15,14 +15,14 @@ namespace OOP_RPG
             Defense = defense;
         }
 
-        public int GetAttribute ()
+        public int GetAttribute()
         {
             return Defense;
         }
 
         public void GetDescription()
         {
-            System.Console.WriteLine(Name + " of " + Defense + " Strength");
+            System.Console.WriteLine(Name + " of " + Defense + " Defense");
         }
     }
 }

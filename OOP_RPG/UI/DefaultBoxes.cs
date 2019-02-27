@@ -44,6 +44,13 @@ namespace OOP_RPG.UI
                 inventory.BoxInventoryArmour(hero.EquippedArmour);
             }
 
+            // Equipped Shield
+            if (hero.EquippedShield != null)
+            {
+                inventory.BoxInventorySubHeader("Shield: ");
+                inventory.BoxInventoryShield(hero.EquippedShield);
+            }
+
             inventory.BoxMiddleBreak();
 
             // INVENTORY
@@ -65,6 +72,10 @@ namespace OOP_RPG.UI
                     else if (hero.Bag[i] is Potion)
                     {
                         inventory.BoxInventoryPotion(hero.Bag[i], i + 1);
+                    }
+                    else if (hero.Bag[i] is Shield)
+                    {
+                        inventory.BoxInventoryShield(hero.Bag[i], i + 1);
                     }
                 }
             }
@@ -91,6 +102,7 @@ namespace OOP_RPG.UI
                     {
                         inventory.BoxInventoryArmour(armour);
                     }
+                    inventory.BoxInventoryMiddleBreak();
                 }
                 // POTIONS
                 var heroesPotions = Items.GetListOfItems(hero.Bag, typeof(Potion));
@@ -101,6 +113,18 @@ namespace OOP_RPG.UI
                     foreach (var potion in heroesPotions)
                     {
                         inventory.BoxInventoryPotion(potion);
+                    }
+                    inventory.BoxInventoryMiddleBreak();
+                }
+                // ARMOUR 
+                var heroesShield = Items.GetListOfItems(hero.Bag, typeof(Shield));
+                if (heroesShield.Any())
+                {
+                    inventory.BoxInventorySubHeader("Shields: ");
+
+                    foreach (var shield in heroesShield)
+                    {
+                        inventory.BoxInventoryShield(shield);
                     }
                 }
             }
@@ -153,6 +177,10 @@ namespace OOP_RPG.UI
                 else if (items[i] is Potion)
                 {
                     storeBox.BoxInventoryPotion(items[i], i + 1, false);
+                }
+                else if (items[i] is Shield)
+                {
+                    storeBox.BoxInventoryShield(items[i], i + 1, false);
                 }
             }
             storeBox.BoxMiddleBreak();

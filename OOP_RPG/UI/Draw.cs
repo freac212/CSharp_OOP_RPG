@@ -181,7 +181,14 @@ namespace OOP_RPG.UI
             Console.Write(hero.Defense);
 
             // Check for combined defense from the charaters defense stat + armours defense
-            if (hero.EquippedArmour != null)
+            if (hero.EquippedArmour != null && hero.EquippedShield != null)
+            {
+                Console.Write($"(+{hero.EquippedArmour.GetAttribute() + hero.EquippedShield.GetAttribute()})");
+            } else if (hero.EquippedShield != null)
+            {
+                Console.Write($"(+{hero.EquippedShield.GetAttribute()})");
+            }
+            else if (hero.EquippedArmour != null)
             {
                 Console.Write($"(+{hero.EquippedArmour.GetAttribute()})");
             }
@@ -243,7 +250,7 @@ namespace OOP_RPG.UI
             Console.Write("\u2551");
             Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
             Console.Write("<");
-            Console.Write($"STR: {eqpdWeapon.GetAttribute()}"); // Strength
+            Console.Write($"STR: +{eqpdWeapon.GetAttribute()}"); // Strength
             Console.Write(" | ");
             if (DisplayResaleValue)
             {
@@ -279,7 +286,7 @@ namespace OOP_RPG.UI
             Console.Write("\u2551");
             Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
             Console.Write("<");
-            Console.Write($"DEF: {eqpdArmour.GetAttribute()}"); // Defense
+            Console.Write($"DEF: +{eqpdArmour.GetAttribute()}"); // Defense
             Console.Write(" | ");
             if (DisplayResaleValue)
             {
@@ -324,6 +331,41 @@ namespace OOP_RPG.UI
             {
                 // For the store
                 Console.Write($"Value: {potion.Value}"); // Value
+            }
+            Console.Write(">");
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+        }
+
+        internal void BoxInventoryShield(IGameItem shield, int? index = null, bool displayResaleValue = true)
+        {
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 1, Console.CursorTop);
+            if (index is null)
+            {
+                Console.Write($"> {shield.Name}"); // Shield name
+            }
+            else
+            {
+                Console.Write($"{index} > {shield.Name}"); // Shield name with index
+            }
+            Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(BlockMin, CursorPos++);
+            Console.Write("\u2551");
+            Console.SetCursorPosition(Console.CursorLeft + 3, Console.CursorTop);
+            Console.Write("<");
+            Console.Write($"DEF: +{shield.GetAttribute()}"); // Defense Value.
+            Console.Write(" | ");
+            if (displayResaleValue)
+            {
+                Console.Write($"Value: {shield.ResaleValue}"); // Value
+            }
+            else
+            {
+                // For the store
+                Console.Write($"Value: {shield.Value}"); // Value
             }
             Console.Write(">");
             Console.SetCursorPosition(BlockMax - 1, Console.CursorTop);

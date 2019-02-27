@@ -16,6 +16,7 @@ namespace OOP_RPG
         // FIX
         public IGameItem EquippedWeapon { get; private set; }
         public IGameItem EquippedArmour { get; private set; }
+        public IGameItem EquippedShield { get; private set; }
         public List<IGameItem> Bag { get; set; }
 
         /*This is a Constructor.
@@ -54,6 +55,12 @@ namespace OOP_RPG
                 armor.GetDescription();
             }
 
+            Console.WriteLine("Shields: ");
+            foreach (var armor in Items.GetListOfItems(this.Bag, typeof(Shield)))
+            {
+                armor.GetDescription();
+            }
+
             Console.WriteLine("Equipped: ");
             if (EquippedWeapon != null)
             {
@@ -62,6 +69,10 @@ namespace OOP_RPG
             if (EquippedArmour != null)
             {
                 EquippedArmour.GetDescription();
+            }
+            if (EquippedShield != null)
+            {
+                EquippedShield.GetDescription();
             }
 
             Console.WriteLine($"Gold: {this.Gold}");
@@ -79,6 +90,10 @@ namespace OOP_RPG
                 else if (itemType == typeof(Armor))
                 {
                     this.EquippedArmour = itemBag[weaponIndex];
+                }
+                else if (itemType == typeof(Shield))
+                {
+                    this.EquippedShield = itemBag[weaponIndex];
                 }
             }
         }
@@ -108,6 +123,19 @@ namespace OOP_RPG
                 {
                     var ArmourBag = Items.GetListOfItems(this.Bag, typeof(Armor));
                     this.EquippedArmour = null;
+                    return true;
+                }
+            }
+            else if (type == typeof(Shield))
+            {
+                if (this.EquippedShield == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    var ShieldBag = Items.GetListOfItems(this.Bag, typeof(Shield));
+                    this.EquippedShield = null;
                     return true;
                 }
             }
@@ -145,10 +173,11 @@ namespace OOP_RPG
         {
             // If the potion is going to over heal the player, deny it, and just set the
             // player HP to their HP cap.
-            if(CurrentHP + potion.GetAttribute() >= OriginalHP)
+            if (CurrentHP + potion.GetAttribute() >= OriginalHP)
             {
                 CurrentHP = OriginalHP;
-            } else
+            }
+            else
             {
                 // Else, heal up the value of the potion.
                 CurrentHP += potion.GetAttribute();
@@ -182,14 +211,19 @@ namespace OOP_RPG
             // Remove Item from bag
             this.Bag.Remove(item);
 
-            // Remove Item from equipment slots if they're equipted
-            if(item == this.EquippedWeapon)
+            // Remove Item from equipment slots if they're equipped
+            if (item == this.EquippedWeapon)
             {
                 this.UpEquip(typeof(Weapon));
 
-            } else if (item == this.EquippedArmour)
+            }
+            else if (item == this.EquippedArmour)
             {
                 this.UpEquip(typeof(Armor));
+            }
+            else if (item == this.EquippedShield)
+            {
+                this.UpEquip(typeof(Shield));
             }
         }
     }

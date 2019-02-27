@@ -43,27 +43,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Armor.cs" />
+    <Compile Include="Items\Armor.cs" />
     <Compile Include="Difficulty.cs" />
     <Compile Include="Fight.cs" />
-    <Compile Include="IGameItem.cs" />
+    <Compile Include="Items\IGameItem.cs" />
     <Compile Include="Loot.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Hero.cs" />
-    <Compile Include="Items.cs" />
+    <Compile Include="Items\Items.cs" />
     <Compile Include="Monster.cs" />
     <Compile Include="MonsterGenerator.cs" />
     <Compile Include="MonsterPicker.cs" />
     <Compile Include="MonsterPoints.cs" />
-    <Compile Include="Potion.cs" />
+    <Compile Include="Items\Potion.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Items\Shield.cs" />
     <Compile Include="Shop.cs" />
     <Compile Include="Testing.cs" />
     <Compile Include="UI\DefaultBoxes.cs" />
     <Compile Include="UI\Draw.cs" />
     <Compile Include="UI\Grid.cs" />
-    <Compile Include="Weapon.cs" />
+    <Compile Include="Items\Weapon.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

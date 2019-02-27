@@ -7,17 +7,18 @@ namespace OOP_RPG
     {
         private Monster CurrentMonster { get; }
         private Hero Hero { get; }
+        private bool LostFight = false;
 
         public Fight(Hero game)
         {
             Hero = game;
 
-            CurrentMonster = MonsterPicker.GetMonster();
+            CurrentMonster = MonsterPicker.GetMonster(Difficulty.Hard);
         }
 
         public void Start()
         {
-            while (CurrentMonster.CurrentHP > 0 && Hero.CurrentHP > 0)
+            while (CurrentMonster.CurrentHP > 0 && Hero.CurrentHP > 0 && LostFight != true)
             {
                 Console.Clear();
                 UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
@@ -26,7 +27,8 @@ namespace OOP_RPG
 
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
-                    "1. Fight"
+                    "1. Fight",
+                    "2. Run"
                 }, UI.Grid.Center);
 
                 var input = Console.ReadLine();
@@ -34,6 +36,10 @@ namespace OOP_RPG
                 if (input == "1")
                 {
                     HeroTurn();
+                }
+                else if (input == "2")
+                {
+                    RunFromFight();
                 }
             }
         }
@@ -100,7 +106,6 @@ namespace OOP_RPG
                 compare = CurrentMonster.Strength - Hero.Defense;
             }
 
-
             if (compare <= 0)
             {
                 damage = 1;
@@ -141,13 +146,94 @@ namespace OOP_RPG
         private void Lose()
         {
             Console.Clear();
+            LostFight = true; // Cuz they died..
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+            UI.Draw.PrintToOutput(new List<string>
+                {
+                    "You've been defeated! :( GAME OVER.",
+                });
+            UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "Press any key to exit the game."
+                }, UI.Grid.Center);
+            Console.ReadKey();
+        }
+
+        private void EvadeFight()
+        {
+            Console.Clear();
+            LostFight = true; // Lost the fight, but escaped with only a few scratches
             UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
             UI.DefaultBoxes.DrawOptions(new List<string>
                 {
-                    "You've been defeated! :( GAME OVER."
+                    "Press any key to continue..."
                 }, UI.Grid.Center);
-            UI.Draw.PrintToOptions("Press any key to exit the game");
+            UI.Draw.PrintToOutput(new List<string>
+                {
+                    "Cowardice only gets you so far..",
+                });
             Console.ReadKey();
+        }
+
+        private void EvadeFailed()
+        {
+            Console.Clear();
+            UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
+            UI.DefaultBoxes.DrawOptions(new List<string>
+                    {
+                        "Press any key to continue..."
+                    }, UI.Grid.Center);
+            UI.Draw.PrintToOutput(new List<string>
+                        {
+                            "You failed to run from the fight...",
+                        });
+            MonsterTurn();
+        }
+
+        private void RunFromFight()
+        {
+            // roll succeeds; Evade;
+            // roll fails, enemy attacks, you stay and have to fight.
+            var randomNum = new Random();
+            const int baseRoll = 100;
+            // if roll is > 50% Success
+            const int easyRoll = (baseRoll - 50) + 1;
+            // if roll is > 25% Success
+            const int mediumRoll = (baseRoll - 25) + 1;
+            // if roll is > 5% Success
+            const int hardRoll = (baseRoll - 5) + 1;
+            int roll = 100 + 1;
+            int chanceToEvade;
+
+            roll = randomNum.Next(0, roll);
+
+            switch (CurrentMonster.Difficulty)
+            {
+                case Difficulty.Easy:
+                    chanceToEvade = easyRoll;
+                    break;
+
+                case Difficulty.Medium:
+                    chanceToEvade = mediumRoll;
+                    break;
+
+                case Difficulty.Hard:
+                    chanceToEvade = hardRoll;
+                    break;
+
+                default:
+                    chanceToEvade = easyRoll;
+                    break;
+            };
+
+            if (roll >= chanceToEvade)
+            {
+                EvadeFight();
+            }
+            else
+            {
+                EvadeFailed();
+            }
         }
     }
 }
