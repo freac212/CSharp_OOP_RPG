@@ -17,7 +17,7 @@ namespace OOP_RPG
 
         public void Start()
         {
-
+            UI.Draw.IntroSplashScreen();
             Console.WriteLine("Welcome hero!");
             Console.WriteLine("Please enter your name:");
 
@@ -70,7 +70,7 @@ namespace OOP_RPG
 
         private void Inventory()
         {
-            Console.Clear();
+            Console.Clear(); // Just incase! :D
             var inventoryInput = "";
 
             while (inventoryInput != "0")
@@ -123,66 +123,8 @@ namespace OOP_RPG
                 }
                 else if (inventoryInput == "8")
                 {
-                    UseHealthPotion();
+                    UseHealthPotion(Hero);
                 }
-            }
-        }
-
-        private void UseHealthPotion()
-        {
-            Console.Clear();
-            UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Potion)));
-            var potionUseInput = "";
-            if (Items.GetListOfItems(Hero.Bag, typeof(Potion)).Any())
-            {
-                UI.DefaultBoxes.DrawOptions(new List<string>
-                {
-                    "Choose an item to use number to use!",
-                    "Press 0 to return to main menu."
-                }, UI.Grid.Center);
-                UI.Draw.UpdateInputCursor();
-
-                potionUseInput = Console.ReadLine();
-
-                while (!int.TryParse(potionUseInput, out int _x))
-                {
-                    Console.WriteLine("That is not a number, please choose again.");
-                    potionUseInput = Console.ReadLine();
-                }
-
-                // If the input can be parsed as a number
-                if (int.TryParse(potionUseInput, out int potionIndex) && potionIndex != 0)
-                {
-                    // If the number is an index of health potion bag
-                    if ((potionIndex -= 1) <= Items.GetListOfItems(Hero.Bag, typeof(Potion)).Count - 1)
-                    {
-                        // Then use that potion
-                        Hero.UseHealthPotion(potionIndex);
-                        UI.Draw.PrintToOutput(new List<string> {
-                            "Item used!",
-                            $"Your HP is now {Hero.CurrentHP}/{Hero.OriginalHP}"
-                        });
-                    }
-                    else
-                    {
-                        UI.Draw.PrintToOutput(new List<string> {
-                            "There's no potion with that number..."
-                        });
-                    }
-                    UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
-                    UI.Draw.UpdateInputCursor();
-                    Console.ReadKey();
-                }
-            }
-            else
-            {
-                UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
-                UI.Draw.PrintToOutput(new List<string> {
-                    "You don't have any health potions... ",
-                    "Go buy some from the store!"
-                });
-                UI.Draw.UpdateInputCursor();
-                Console.ReadKey();
             }
         }
 
@@ -260,15 +202,14 @@ namespace OOP_RPG
                 {
                     "Press any key to return to main menu."
                 }, UI.Grid.Center);
+                Console.ReadLine();
             }
-
-
 
             void TakeInput()
             {
                 UI.Draw.UpdateInputCursor();
                 equipInput = Console.ReadLine();
-                
+
                 while (!int.TryParse(equipInput, out int _x))
                 {
                     UI.Draw.PrintToOutput("That is not a number, please choose again.");
@@ -297,6 +238,90 @@ namespace OOP_RPG
                 }
             }
         }
+
+        public static void UseHealthPotion(Hero Hero)
+        {
+            Console.Clear();
+            UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Potion)));
+            var potionUseInput = "";
+
+            // Check hero HP first, maybe they're already at full health..
+            if (Hero.CurrentHP == Hero.OriginalHP)
+            {
+                Console.Clear();
+                UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Potion)));
+                UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+                UI.Draw.PrintToOutput(new List<string>
+                    {
+                        "You're already at full HP! "
+                    });
+                UI.Draw.UpdateInputCursor();
+                Console.ReadKey();
+            }
+            else
+            {
+                // Check if they have potions in their inventory.
+                if (Items.GetListOfItems(Hero.Bag, typeof(Potion)).Any())
+                {
+                    UI.DefaultBoxes.DrawOptions(new List<string>
+                {
+                    "Choose an item to use number to use!",
+                    "Press 0 to return to main menu."
+                }, UI.Grid.Center);
+                    UI.Draw.UpdateInputCursor();
+
+                    potionUseInput = Console.ReadLine();
+
+                    while (!int.TryParse(potionUseInput, out int _x))
+                    {
+                        Console.WriteLine("That is not a number, please choose again.");
+                        potionUseInput = Console.ReadLine();
+                    }
+
+                    // If the input can be parsed as a number
+                    Console.Clear();
+                    UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Potion)));
+                    if (int.TryParse(potionUseInput, out int potionIndex) && potionIndex != 0)
+                    {
+                        // If the number is an index of health potion bag
+                        if ((potionIndex -= 1) <= Items.GetListOfItems(Hero.Bag, typeof(Potion)).Count - 1)
+                        {
+                            // Then use that potion
+                            Hero.UseHealthPotion(potionIndex);
+                            UI.Draw.PrintToOutput(new List<string>
+                            {
+                                "Item used!",
+                                $"Your HP is now {Hero.CurrentHP}/{Hero.OriginalHP}"
+                            });
+                        }
+                        else
+                        {
+                            UI.Draw.PrintToOutput(new List<string>
+                            {
+                                "There's no potion with that number..."
+                            });
+                        }
+                        UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+                        UI.Draw.UpdateInputCursor();
+                        Console.ReadKey();
+                    }
+                }
+                else
+                {
+                    Console.Clear();
+                    UI.DefaultBoxes.DrawManageInventory(Hero, UI.Grid.Left, Items.GetListOfItems(Hero.Bag, typeof(Potion)));
+                    UI.DefaultBoxes.DrawOptions(new List<string> { "Press any key to return to Inventory." }, UI.Grid.Center);
+                    UI.Draw.PrintToOutput(new List<string>
+                    {
+                        "You don't have any health potions... ",
+                        "Go buy some from the store!"
+                    });
+                    UI.Draw.UpdateInputCursor();
+                    Console.ReadKey();
+                }
+            }
+        }
+
         private void Fight()
         {
             var fight = new Fight(Hero, achievements);

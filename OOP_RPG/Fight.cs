@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace OOP_RPG
 {
@@ -8,6 +9,7 @@ namespace OOP_RPG
         private Monster CurrentMonster { get; }
         private Hero Hero { get; }
         private AchievementList Achievements { get; }
+
         private bool LostFight = false;
 
         public Fight(Hero game, AchievementList achieve)
@@ -30,7 +32,8 @@ namespace OOP_RPG
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
                     "1. Fight",
-                    "2. Run"
+                    "2. Use a Potion",
+                    "3. Run"
                 }, UI.Grid.Center);
                 UI.Draw.UpdateInputCursor();
 
@@ -42,9 +45,18 @@ namespace OOP_RPG
                 }
                 else if (input == "2")
                 {
+                    UseAPotion();
+                }
+                else if (input == "3")
+                {
                     RunFromFight();
                 }
             }
+        }
+
+        private void UseAPotion()
+        {
+            Game.UseHealthPotion(Hero);
         }
 
         private void HeroTurn()

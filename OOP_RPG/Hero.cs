@@ -13,7 +13,6 @@ namespace OOP_RPG
         public int OriginalHP { get; set; }
         public int CurrentHP { get; set; }
         public int Gold { get; private set; }
-        // FIX
         public IGameItem EquippedWeapon { get; private set; }
         public IGameItem EquippedArmour { get; private set; }
         public IGameItem EquippedShield { get; private set; }
@@ -109,8 +108,13 @@ namespace OOP_RPG
 
         public void AddGold(int gold)
         {
-            //TODO: Add gold coins check, ensure the value is a positive int.
-            Gold += gold;
+            if(gold > 0)
+            {
+                Gold += gold;
+            } else
+            {
+                throw new Exception("Passing either 0 or a negative value");
+            }
         }
 
         public void RemoveGold(int gold)
@@ -175,7 +179,6 @@ namespace OOP_RPG
             if (item == this.EquippedWeapon)
             {
                 this.UpEquip(typeof(Weapon));
-
             }
             else if (item == this.EquippedArmour)
             {
