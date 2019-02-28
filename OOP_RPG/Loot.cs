@@ -11,43 +11,33 @@ namespace OOP_RPG
         public static int LootGenerator(Hero hero, Difficulty difficulty)
         {
             // Gold reward is calculated based on difficulty
-            //  BaseGold: 30
+            //  BaseGold: 31
             //          Min:    Max:
             //  Easy:   1 %     30 %
             //  Medium: 30 %    70 %
             //  Hard:   70 %    100 %
-            const double EasyMin = 0.01;
-            const double EasyMax = 0.30;
-
-            const double MediumMin = 0.30;
-            const double MediumMax = 0.70;
-
-            const double HardMin = 0.70;
-            const double HardMax = 1;
-
-
-            int baseRewardGold = 31;
+            int rewardGold = 0;
             var randomNum = new Random();
 
             switch (difficulty)
             {
                 case Difficulty.Easy:
-                    baseRewardGold = randomNum.Next((int)(baseRewardGold * EasyMin), (int)(baseRewardGold * EasyMax));
+                    rewardGold = randomNum.Next((int)(Settings.BaseRewardGold * Settings.GoldEarnedEasyMin), (int)(Settings.BaseRewardGold * Settings.GoldEarnedEasyMax));
                     break;
 
                 case Difficulty.Medium:
-                    baseRewardGold = randomNum.Next((int)(baseRewardGold * MediumMin), (int)(baseRewardGold * MediumMax));
+                    rewardGold = randomNum.Next((int)(Settings.BaseRewardGold * Settings.GoldEarnedMediumMin), (int)(Settings.BaseRewardGold * Settings.GoldEarnedMediumMax));
                     break;
 
                 case Difficulty.Hard:
-                    baseRewardGold = randomNum.Next((int)(baseRewardGold * HardMin), (int)(baseRewardGold * HardMax));
+                    rewardGold = randomNum.Next((int)(Settings.BaseRewardGold * Settings.GoldEarnedHardMin), (int)(Settings.BaseRewardGold * Settings.GoldEarnedHardMax));
                     break;
 
                 default:
                     break;
             }
-            hero.AddGold(baseRewardGold);
-            return baseRewardGold;
+            hero.AddGold(rewardGold);
+            return rewardGold;
         }
     }
 }

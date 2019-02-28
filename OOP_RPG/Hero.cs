@@ -36,7 +36,6 @@ namespace OOP_RPG
         }
 
         //These are the Methods of our Class.
-
         public void Equip(int weaponIndex, Type itemType)
         {
             var itemBag = Items.GetListOfItems(this.Bag, itemType);

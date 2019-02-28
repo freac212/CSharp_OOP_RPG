@@ -12,7 +12,6 @@ namespace OOP_RPG
             Name = name;
             Value = value;
             ResaleValue = Items.CalculatedItemValue(value);
-
             Strength = strength;
         }
 

@@ -8,8 +8,6 @@ namespace OOP_RPG
 {
     public class Items
     {
-
-        //TODO: Change ItemTypes to class type!
         public static List<IGameItem> GetListOfItems(List<IGameItem> items, Type className)
         {
             return (from item in items
@@ -22,6 +20,5 @@ namespace OOP_RPG
             var random = new Random();
             return random.Next((int)(Settings.ValueDepreciationMin * value), (int)(Settings.ValueDepreciationMax * value));
         }
-
     }
 }

@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_RPG.UI
 {
     public class DefaultBoxes
     {
+        /* The Default Boxes contains methods that are bassically organized boxes
+         * that contain methods from the Draw class to draw, well, boxes with purpose.
+         * You can design a "Box" here by calling certain draw method in order, to draw
+         * whatever you want. In my case, I have things like inventory, options, store, etc
+         * all somewhat neatly placed here to call in the Game page whenever I need them.
+         */
         public static void DrawInventory(Hero hero, Grid grid, bool drawItemsWithIndexs = false)
         {
             int BlockMax = grid.GridMax;
@@ -87,8 +90,7 @@ namespace OOP_RPG.UI
                            where item != hero.EquippedWeapon && item != hero.EquippedArmour && item != hero.EquippedShield
                            select item).ToList();
 
-
-                var heroesWeapons = Items.GetListOfItems(bag , typeof(Weapon));
+                var heroesWeapons = Items.GetListOfItems(bag, typeof(Weapon));
                 if (heroesWeapons.Any())
                 {
                     inventory.BoxInventorySubHeader("Weapons: ");

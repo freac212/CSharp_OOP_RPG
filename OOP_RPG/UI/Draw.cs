@@ -8,13 +8,12 @@ namespace OOP_RPG.UI
 {
     public class Draw
     {
+        // I don't recommend calling methods straight from here, even though PrintToOutput
+        // is here. This is mainly for DefaultBoxes Class.
         // TODO: ADD AN OUTPUT LOG LIST, DISPLAYS LAST 4 MESSAGES!!!! Will contain a clear method aswell..?
         // So Output class
         //      > AddToOutput
         //      > ClearOutput
-        // Two important properties that have to be at the top of all methods, this is because DisplayInventory sets it
-        // While drawing/ updating output uses it.
-
         // Working code chart:
         // \u2588 █
         // \u2593 ▓
@@ -31,7 +30,6 @@ namespace OOP_RPG.UI
         // \u255A ╚
         // \u255D ╝
         //|                                     | <- Console width..
-
         // Grid drawing related
         public int BlockMax { get; set; }
         private int BlockMin { get; set; }

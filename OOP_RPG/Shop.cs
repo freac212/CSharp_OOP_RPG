@@ -8,10 +8,6 @@ namespace OOP_RPG
 {
     static class Shop
     {
-        // Sort by options later on?
-        // TODO: Allow equiping in the store
-        // TODO: Avoid passing around hero, right?
-        // TODO: When displaying items, sort the list by type, then display, maybe allow the user to sort the list by item??
         public static List<IGameItem> ShopItems = new List<IGameItem>
         {
             new Weapon("Arm", 3, 20),
@@ -77,10 +73,10 @@ namespace OOP_RPG
                         UI.DefaultBoxes.DrawInventory(hero, UI.Grid.Left);
                         UI.DefaultBoxes.DrawStore(ShopItems, UI.Grid.Right);
                         UI.DefaultBoxes.DrawOptions(new List<string>
-                        {
-                            "Please choose an item #",
-                            "Press enter to exit..",
-                        }, UI.Grid.Center);
+                            {
+                                "Please choose an item #",
+                                "Press enter to exit..",
+                            }, UI.Grid.Center);
 
                         shopInput = Console.ReadLine();
                         if (shopInput == "")
@@ -97,25 +93,28 @@ namespace OOP_RPG
                                 // If the item is purchased, return true.
                                 if (BuyItem(shopInputConverted, hero))
                                 {
-                                    UI.Draw.PrintToOutput(new List<string>{
-                                        "Item purchased!",
-                                        "Press any button to return to shop..."
-                                    });
+                                    UI.Draw.PrintToOutput(new List<string>
+                                        {
+                                            "Item purchased!",
+                                            "Press any button to return to shop..."
+                                        });
                                 }
                                 else
                                 {
-                                    UI.Draw.PrintToOutput(new List<string> {
-                                        "Not enough gold!",
-                                        "Press any button to return to shop..."
-                                    });
+                                    UI.Draw.PrintToOutput(new List<string>
+                                        {
+                                            "Not enough gold!",
+                                            "Press any button to return to shop..."
+                                        });
                                 }
                             }
                             else
                             {
-                                UI.Draw.PrintToOutput(new List<string> {
-                                    "Input value was either 0 or less",
-                                    "Press any button to return to shop..."
-                                });
+                                UI.Draw.PrintToOutput(new List<string>
+                                    {
+                                        "Input value was either 0 or less",
+                                        "Press any button to return to shop..."
+                                    });
                             }
                             Console.ReadLine();
                         }
@@ -157,14 +156,16 @@ namespace OOP_RPG
                             if (sellInputIndex > 0)
                             {
                                 PlayerSellItem(sellInputIndex, hero);
-                                UI.Draw.PrintToOutput(new List<string>{
+                                UI.Draw.PrintToOutput(new List<string>
+                                {
                                     "Item sold!",
                                     "Press any button to return to shop..."
                                 });
                             }
                             else
                             {
-                                UI.Draw.PrintToOutput(new List<string> {
+                                UI.Draw.PrintToOutput(new List<string>
+                                {
                                     "Input value was either 0 or less",
                                     "Press any button to return to shop..."
                                 });
