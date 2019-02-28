@@ -177,7 +177,7 @@ namespace OOP_RPG
             Console.ReadKey();
         }
 
-        private void EvadeFight()
+        private void EvadeSucceeded()
         {
             Console.Clear();
             LostFight = true; // Lost the fight, but escaped with only a few scratches
@@ -242,7 +242,7 @@ namespace OOP_RPG
 
             if (roll >= chanceToEvade)
             {
-                EvadeFight();
+                EvadeSucceeded();
             }
             else
             {

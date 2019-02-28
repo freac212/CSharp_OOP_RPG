@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace OOP_RPG
 {
@@ -156,7 +154,6 @@ namespace OOP_RPG
                         }
                         else
                         {
-
                             int.TryParse(sellInput, out int sellInputIndex);
                             // Input validation, cannot be 0
                             if (sellInputIndex > 0)
