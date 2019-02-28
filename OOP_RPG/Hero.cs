@@ -16,6 +16,7 @@ namespace OOP_RPG
         public IGameItem EquippedWeapon { get; private set; }
         public IGameItem EquippedArmour { get; private set; }
         public IGameItem EquippedShield { get; private set; }
+        public int MonsterKills { get; private set; }
         public List<IGameItem> Bag { get; set; }
 
         /*This is a Constructor.
@@ -28,7 +29,7 @@ namespace OOP_RPG
         public Hero()
         {
             Bag = new List<IGameItem>();
-            Strength = 12;
+            Strength = 1200;
             Defense = 12;
             OriginalHP = 30;
             CurrentHP = 30;
@@ -187,6 +188,11 @@ namespace OOP_RPG
             {
                 this.UpEquip(typeof(Shield));
             }
+        }
+
+        public void IncrementMonsterKills()
+        {
+            MonsterKills++;
         }
     }
 }

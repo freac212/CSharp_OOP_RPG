@@ -9,7 +9,6 @@ namespace OOP_RPG
     public class AchievementList
     {
         // The Achievements are solely based on kills.
-        public int MonsterKills { get; private set; }
         public List<Monster> DefeatedMonsters = new List<Monster>();
         public List<Achievement> BaseAchievements = new List<Achievement>
         {
@@ -114,13 +113,7 @@ namespace OOP_RPG
         public void AddToDefeatedMonsters(Monster monster)
         {
             DefeatedMonsters.Add(monster);
-            IncrementMonsterKills();
             CheckForAchievement();
-        }
-
-        public void IncrementMonsterKills()
-        {
-            MonsterKills++;
         }
 
         public int GetTotalPoints()

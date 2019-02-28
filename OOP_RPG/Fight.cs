@@ -142,6 +142,7 @@ namespace OOP_RPG
         {
             // Check/Add-to Achievements
             Achievements.AddToDefeatedMonsters(CurrentMonster);
+            Hero.IncrementMonsterKills();
 
             // Fight reward will be called here.
             var GoldWon = Loot.LootGenerator(Hero, CurrentMonster.Difficulty);
