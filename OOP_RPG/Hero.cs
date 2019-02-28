@@ -28,8 +28,8 @@ namespace OOP_RPG
         public Hero()
         {
             Bag = new List<IGameItem>();
-            Strength = 10;
-            Defense = 10;
+            Strength = 12;
+            Defense = 12;
             OriginalHP = 30;
             CurrentHP = 30;
             Gold = 10;
@@ -107,12 +107,12 @@ namespace OOP_RPG
 
         public void AddGold(int gold)
         {
-            if(gold > 0)
+            if(gold >= 0)
             {
                 Gold += gold;
             } else
             {
-                throw new Exception("Passing either 0 or a negative value");
+                throw new Exception("Passing a negative value");
             }
         }
 
