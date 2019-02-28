@@ -10,26 +10,32 @@ namespace OOP_RPG
     {
         public static List<IGameItem> ShopItems = new List<IGameItem>
         {
-            new Weapon("Arm", 3, 20),
+            new Weapon("Arm", 3, 50),
             new Weapon("Box", 1, 5),
-            new Weapon("Iron Dagger", 2, 15),
-            new Weapon("Iron LongSword", 5, 50),
-            new Weapon("Iron ShortSword", 3, 19),
-            new Weapon("Iron Sword", 4, 30),
-            new Weapon("Katana", 7, 150),
-            new Weapon("HolyHandGrenade", 5, 100),
-            new Weapon("Weapon Of Doom", 9, 400),
+            new Weapon("Iron Dagger", 2, 25),
+            new Weapon("Iron LongSword", 5, 75),
+            new Weapon("Iron ShortSword", 3, 45),
+            new Weapon("Iron Sword", 4, 100),
+            new Weapon("Katana", 7, 400),
+            new Weapon("Small Axe", 3, 50),
+            new Weapon("Axe", 5, 120),
+            new Weapon("HolyHandGrenade", 5, 120),
+            new Weapon("Weapon Of Doom", 8, 1000),
             new Weapon("Obsidian Zweihander", 50, 100000),
+
             new Armor("Iron Chestplate", 3, 20),
             new Armor("Leather Chestplate", 1, 5),
-            new Armor("Dragon Armour", 25, 10000),
+            new Armor("Chainmail", 2, 15),
+            new Armor("Dragon Armour", 10, 10000),
+
             new Potion("Small Health Potion", 5, 10),
             new Potion("Health Potion", 15, 30),
             new Potion("Large Health Potion", 30, 60),
+
             new Shield("Round Wooden Shield", 3, 40),
             new Shield("Iron Box Shield", 4, 80),
             new Shield("Steel Box Shield", 5, 100),
-            new Shield("Obsidian Shield", 10, 1000)
+            new Shield("Obsidian Shield", 6, 1000)
         };
 
         public static void CreateShop(Hero hero)
@@ -198,7 +204,12 @@ namespace OOP_RPG
                 // Add to Hero's inventory, remove from stores inventory.
                 hero.Bag.Add(getItem);
                 hero.RemoveGold(getItem.Value);
-                ShopItems.RemoveAt(itemIndex);
+                // If item is not a potion, remove from store.
+                if (!IsPotion(getItem.GetType()))
+                {
+                    ShopItems.RemoveAt(itemIndex);
+                }
+               
                 return true;
             }
             else
@@ -216,10 +227,20 @@ namespace OOP_RPG
                            select item).FirstOrDefault();
 
             // Add to Shop's inventory, remove from Hero's inventory.
-            ShopItems.Add(getItem);
+            // If the item is not a potion, add it to the shops inventory
+            if (!IsPotion(getItem.GetType()))
+            {
+                ShopItems.Add(getItem);
+            }
+
             hero.RemoveItemFromHero(getItem);
             hero.AddGold(getItem.ResaleValue);
             return getItem.ResaleValue;
+        }
+
+        public static bool IsPotion(Type type)
+        {
+            return type == typeof(Potion) ? true : false;
         }
     }
 }

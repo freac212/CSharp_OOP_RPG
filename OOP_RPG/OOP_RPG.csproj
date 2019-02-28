@@ -64,7 +64,6 @@
     <Compile Include="Items\Shield.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="Shop.cs" />
-    <Compile Include="Testing.cs" />
     <Compile Include="UI\DefaultBoxes.cs" />
     <Compile Include="UI\Draw.cs" />
     <Compile Include="UI\Grid.cs" />

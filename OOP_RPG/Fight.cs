@@ -27,7 +27,7 @@ namespace OOP_RPG
                 UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
                 UI.Draw.PrintToOutput(new List<string> {
                     "You've encountered " + CurrentMonster.Name + "! ",
-                    $"Strength/{CurrentMonster.Strength} Defense/{CurrentMonster.Defense}" + CurrentMonster.CurrentHP + $" HP. Difficulty: {CurrentMonster.Difficulty}. What will you do?"
+                    $"Strength/{CurrentMonster.Strength} Defense/{CurrentMonster.Defense} HP/{CurrentMonster.CurrentHP} Difficulty: {CurrentMonster.Difficulty}. What will you do?"
                     });
                 UI.DefaultBoxes.DrawOptions(new List<string>
                 {
