@@ -49,8 +49,6 @@ namespace OOP_RPG
 
         private void HeroTurn()
         {
-            const double minMultiplier = 0.5;
-            const double maxMultiplier = 1.5;
             var randomNum = new Random();
 
             int compare;
@@ -58,15 +56,15 @@ namespace OOP_RPG
             {
                 // Maybe make this into a method
                 var baseDamage = (Hero.Strength + Hero.EquippedWeapon.GetAttribute()) - CurrentMonster.Defense;
-                int minDamage = (int)(baseDamage * minMultiplier);
-                int maxDamage = (int)(baseDamage * maxMultiplier);
+                int minDamage = (int)(baseDamage * Settings.HeroDamageMinMultiplier);
+                int maxDamage = (int)(baseDamage * Settings.HeroDamageMaxMultiplier);
                 compare = randomNum.Next(minDamage, maxDamage);
             }
             else
             {
                 var baseDamage = Hero.Strength - CurrentMonster.Defense;
-                int minDamage = (int)(baseDamage * minMultiplier);
-                int maxDamage = (int)(baseDamage * maxMultiplier);
+                int minDamage = (int)(baseDamage * Settings.HeroDamageMinMultiplier);
+                int maxDamage = (int)(baseDamage * Settings.HeroDamageMaxMultiplier);
                 compare = randomNum.Next(minDamage, maxDamage);
             }
 
@@ -206,13 +204,6 @@ namespace OOP_RPG
             // roll succeeds; Evade;
             // roll fails, enemy attacks, you stay and have to fight.
             var randomNum = new Random();
-            const int baseRoll = 100;
-            // if roll is > 50% Success
-            const int easyRoll = (baseRoll - 50) + 1;
-            // if roll is > 25% Success
-            const int mediumRoll = (baseRoll - 25) + 1;
-            // if roll is > 5% Success
-            const int hardRoll = (baseRoll - 5) + 1;
             int roll = 100 + 1;
             int chanceToEvade;
 
@@ -221,19 +212,19 @@ namespace OOP_RPG
             switch (CurrentMonster.Difficulty)
             {
                 case Difficulty.Easy:
-                    chanceToEvade = easyRoll;
+                    chanceToEvade = Settings.EasyRoll;
                     break;
 
                 case Difficulty.Medium:
-                    chanceToEvade = mediumRoll;
+                    chanceToEvade = Settings.MediumRoll;
                     break;
 
                 case Difficulty.Hard:
-                    chanceToEvade = hardRoll;
+                    chanceToEvade = Settings.HardRoll;
                     break;
 
                 default:
-                    chanceToEvade = easyRoll;
+                    chanceToEvade = Settings.EasyRoll;
                     break;
             };
 

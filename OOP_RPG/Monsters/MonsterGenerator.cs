@@ -6,12 +6,6 @@ namespace OOP_RPG
 {
     public static class MonsterGenerator
     {
-        // Constants, percentage based values for Easy, Medium, Hard.
-        private const double StrengthPercentageMin = .25;
-        private const double StrengthPercentageMax = .35;
-        private const double DefensePercentageMin = .09;
-        private const double DefensePercentageMax = .18;
-
         public static class StatsGenerator
         {
             private static Random random = new Random();
@@ -19,24 +13,24 @@ namespace OOP_RPG
             public static MonsterPoints Easy()
             {
                 // 30 points available
-                return AllocatePoints(30, Difficulty.Easy);
+                return AllocatePoints(Settings.EasyMonsterPoints, Difficulty.Easy);
             }
             public static MonsterPoints Medium()
             {
                 // 40 points available
-                return AllocatePoints(40, Difficulty.Medium);
+                return AllocatePoints(Settings.MediumMonsterPoints, Difficulty.Medium);
             }
             public static MonsterPoints Hard()
             {
                 // 50 points available
-                return AllocatePoints(50, Difficulty.Hard);
+                return AllocatePoints(Settings.HardMonsterPoints, Difficulty.Hard);
             }
 
             static private MonsterPoints AllocatePoints(int pointsAvailableToAllocate, Difficulty difficulty)
             {
                 // Strength, defense, HP
-                int randomAllocatedStrength = random.Next((int)(pointsAvailableToAllocate * StrengthPercentageMin), (int)(pointsAvailableToAllocate * StrengthPercentageMax));
-                int randomAllocatedDefense = random.Next((int)(pointsAvailableToAllocate * DefensePercentageMin), (int)(pointsAvailableToAllocate * DefensePercentageMax));
+                int randomAllocatedStrength = random.Next((int)(pointsAvailableToAllocate * Settings.MonsterStrengthPercentageMin), (int)(pointsAvailableToAllocate * Settings.MonsterStrengthPercentageMax));
+                int randomAllocatedDefense = random.Next((int)(pointsAvailableToAllocate * Settings.MonsterDefensePercentageMin), (int)(pointsAvailableToAllocate * Settings.MonsterDefensePercentageMax));
                 int randomAllocatedHP = (pointsAvailableToAllocate - (randomAllocatedStrength + randomAllocatedDefense));
 
                 return new MonsterPoints(randomAllocatedStrength, randomAllocatedDefense, randomAllocatedHP, difficulty);
@@ -70,7 +64,6 @@ namespace OOP_RPG
 
         public static List<Monster> GenerateMonsters()
         {
-            const int EnemiesCreatedPerDay = 10;
             List<Monster> GeneratedListOfMonsters = new List<Monster>();
             Random randomNum = new Random();
 
@@ -78,7 +71,7 @@ namespace OOP_RPG
             {
                 var Date = (DayOfWeek)dayOfWeek;
 
-                for (int i = 0; i < EnemiesCreatedPerDay; i++)
+                for (int i = 0; i < Settings.EnemiesCreatedPerDay; i++)
                 {
                     
                     if (i >= 0 && i <= 3)
