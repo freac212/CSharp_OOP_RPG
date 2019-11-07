@@ -18,5 +18,5 @@ defeat you...
 * Armour and Shields both add to your pre-existing defense as they stack just like strength.
 * Potions (Currently only Health Potions) heal you by the amount of health it contains, does not heal over max health.
 * You can gain achievements, they're kinda/ sorta secretive, but I'm sure you could find them easily. (Hint: They all involve defeating Monsters!)
-* One last very important thing, if your health goes below reaches or goes below 0, you die! And GameOver for that character, you'll just have to try your luck again with a new hero!
+* One last very important thing, if your health reaches or goes below 0, you die! And GameOver for that character, you'll just have to try your luck again with a new hero!
 ### Good Luck!
