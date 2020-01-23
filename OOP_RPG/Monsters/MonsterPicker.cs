@@ -64,14 +64,18 @@ namespace OOP_RPG
             // ========= END OF HARD CODED MONSTERS ==========
         };
 
-        public static Monster GetMonster(Difficulty? difficulty = null)
+        public static Monster GetMonster(Difficulty? difficulty = null, bool isHarcodedList = false)
         {
             // Choose a list type
             // > Generate a list
-            List<Monster> Monsters = MonsterGenerator.GenerateMonsters();
-
+            List<Monster> Monsters;
             // > Use hard-coded list
             //List<Monster> Monsters = MonsterList;
+
+            if (isHarcodedList)
+                Monsters = MonsterList.ToList();
+            else 
+                Monsters = MonsterGenerator.GenerateMonsters();
 
             List<Monster> SortedMonsters;
             DateTime currentDate = DateTime.Today;
