@@ -23,7 +23,7 @@ namespace OOP_RPG
             Difficulty = difficulty;
             Day = day;
         }
-        // This allows for a monster to be generated with a day, just incase I need to for a dungeon or something.
+        // This allows for a monster to be generated without a day, just incase I need to for a dungeon or something.
         public Monster(string name, int strength, int defense, int originalHP, Difficulty difficulty)
         {
             Name = name;

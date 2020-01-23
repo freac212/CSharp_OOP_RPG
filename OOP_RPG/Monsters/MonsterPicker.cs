@@ -75,7 +75,7 @@ namespace OOP_RPG
             if (isHarcodedList)
                 Monsters = MonsterList.ToList();
             else 
-                Monsters = MonsterGenerator.GenerateMonsters();
+                Monsters = MonsterGenerator.GenerateMonsters(); // Note, this generates an entire list of monsters everytime a monster is needed.
 
             List<Monster> SortedMonsters;
             DateTime currentDate = DateTime.Today;
