@@ -146,6 +146,8 @@ namespace OOP_RPG
 
             // Fight reward will be called here.
             var GoldWon = Loot.LootGenerator(Hero, CurrentMonster.Difficulty);
+            Hero.AddGold(GoldWon);
+
             Console.Clear();
             UI.DefaultBoxes.DrawInventory(Hero, UI.Grid.Left);
             UI.Draw.PrintToOutput(new List<string>

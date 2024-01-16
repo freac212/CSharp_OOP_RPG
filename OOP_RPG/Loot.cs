@@ -36,7 +36,7 @@ namespace OOP_RPG
                 default:
                     break;
             }
-            hero.AddGold(rewardGold);
+
             return rewardGold;
         }
     }
